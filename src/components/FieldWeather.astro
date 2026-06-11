@@ -1,0 +1,109 @@
+---
+import type { FieldWeather } from '../lib/fetchFieldWeather';
+import { assessFlyability } from '../lib/flyability';
+import { FIELD_NAME, FIELD_TIMEZONE } from '../lib/fieldLocation';
+import FlyabilityBadge from './FlyabilityBadge.astro';
+
+interface Props {
+  weather: FieldWeather | null;
+  error?: string | null;
+  compact?: boolean;
+}
+
+const { weather, error = null, compact = false } = Astro.props;
+const flyability = weather ? assessFlyability(weather) : null;
+
+function formatObservedAt(iso: string): string {
+  return new Date(iso).toLocaleString('en-US', {
+    timeZone: FIELD_TIMEZONE,
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  });
+}
+
+function formatPrecip(inches: number): string {
+  if (inches <= 0) return 'None';
+  if (inches < 0.01) return 'Trace';
+  return `${inches.toFixed(2)} in`;
+}
+---
+
+{
+  compact ? (
+    <aside class="field-weather field-weather--compact">
+      {error ? (
+        <p>Field weather unavailable. <a href="/kissner-field">View Kissner Field</a></p>
+      ) : weather ? (
+        <div class="field-weather__compact-row">
+          <div class="field-weather__compact-details">
+            <p class="field-weather__compact-summary">
+              <strong>{FIELD_NAME}:</strong>{' '}
+              {weather.temperatureF}°F · Wind {weather.windSpeedMph} mph {weather.windDirection}
+              {weather.windGustMph != null && ` · Gusts ${weather.windGustMph} mph`} ·{' '}
+              {weather.conditions} · Rain 24h: {formatPrecip(weather.rainfall24hIn)}
+            </p>
+            <p class="field-weather__compact-link">
+              <a href="/kissner-field">Full conditions</a>
+            </p>
+          </div>
+          {flyability && <FlyabilityBadge flyability={flyability} />}
+        </div>
+      ) : null}
+    </aside>
+  ) : (
+    <aside class="field-weather">
+      <h2>Current Conditions at {FIELD_NAME}</h2>
+      {error ? (
+        <p>{error}</p>
+      ) : weather ? (
+        <>
+          {flyability && <FlyabilityBadge flyability={flyability} />}
+          <div class="field-weather__grid">
+            <div class="field-weather__stat">
+              <span class="field-weather__label">Temperature</span>
+              <span class="field-weather__value">{weather.temperatureF}°F</span>
+            </div>
+            <div class="field-weather__stat">
+              <span class="field-weather__label">Feels like</span>
+              <span class="field-weather__value">{weather.feelsLikeF}°F</span>
+            </div>
+            <div class="field-weather__stat">
+              <span class="field-weather__label">Wind</span>
+              <span class="field-weather__value">
+                {weather.windSpeedMph} mph {weather.windDirection}
+              </span>
+            </div>
+            <div class="field-weather__stat">
+              <span class="field-weather__label">Gusts</span>
+              <span class="field-weather__value">
+                {weather.windGustMph != null ? `${weather.windGustMph} mph` : '—'}
+              </span>
+            </div>
+            <div class="field-weather__stat">
+              <span class="field-weather__label">Humidity</span>
+              <span class="field-weather__value">{weather.humidity}%</span>
+            </div>
+            <div class="field-weather__stat">
+              <span class="field-weather__label">Current hour</span>
+              <span class="field-weather__value">{formatPrecip(weather.precipitationIn)}</span>
+            </div>
+            <div class="field-weather__stat">
+              <span class="field-weather__label">Rainfall (24 hr)</span>
+              <span class="field-weather__value">{formatPrecip(weather.rainfall24hIn)}</span>
+            </div>
+            <div class="field-weather__stat field-weather__stat--wide">
+              <span class="field-weather__label">Conditions</span>
+              <span class="field-weather__value">{weather.conditions}</span>
+            </div>
+          </div>
+          <p class="field-weather__updated">
+            Last updated {formatObservedAt(weather.observedAt)} (Central Time)
+          </p>
+          <p class="field-weather__disclaimer">
+            Conditions at the field can differ from this reading. Check the windsock before flying.
+          </p>
+        </>
+      ) : null}
+    </aside>
+  )
+}

@@ -1,0 +1,60 @@
+---
+import MediaCard from './MediaCard.astro';
+import type { ClubMediaItem } from '../lib/fetchGroupMedia';
+
+interface Props {
+  media: ClubMediaItem[];
+  showFilters?: boolean;
+}
+
+const { media, showFilters = true } = Astro.props;
+const hasPhotos = media.some((item) => item.type === 'photo');
+const hasVideos = media.some((item) => item.type === 'video');
+---
+
+{
+  showFilters && hasPhotos && hasVideos && (
+    <div class="media-filters" role="tablist" aria-label="Filter media">
+      <button type="button" class="media-filter is-active" data-filter="all" role="tab" aria-selected="true">
+        All
+      </button>
+      <button type="button" class="media-filter" data-filter="photo" role="tab" aria-selected="false">
+        Photos
+      </button>
+      <button type="button" class="media-filter" data-filter="video" role="tab" aria-selected="false">
+        Videos
+      </button>
+    </div>
+  )
+}
+
+<div class="media-grid" data-media-grid>
+  {media.map((item) => <MediaCard item={item} />)}
+</div>
+
+{
+  showFilters && hasPhotos && hasVideos && (
+    <script>
+      const grid = document.querySelector('[data-media-grid]');
+      const filters = document.querySelectorAll('.media-filter');
+
+      filters.forEach((button) => {
+        button.addEventListener('click', () => {
+          const filter = button.getAttribute('data-filter') ?? 'all';
+
+          filters.forEach((el) => {
+            const isActive = el === button;
+            el.classList.toggle('is-active', isActive);
+            el.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          });
+
+          grid?.querySelectorAll('.media-card').forEach((card) => {
+            const type = card.getAttribute('data-type');
+            const show = filter === 'all' || type === filter;
+            card.classList.toggle('is-hidden', !show);
+          });
+        });
+      });
+    </script>
+  )
+}

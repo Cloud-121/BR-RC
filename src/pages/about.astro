@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroStrip from '../components/HeroStrip.astro';
+---
+
+<BaseLayout
+  title="About Us"
+  description="About the Baton Rouge Radio Control Club — AMA chartered club with nearly 40 years at Kissner Field."
+>
+  <HeroStrip headline="About Us" showButton={false} compact />
+
+  <main class="page-main">
+    <div class="content-panel">
+      <section class="content-section">
+        <h2>Our Club</h2>
+        <p>
+          The Baton Rouge Radio Control Club (BRRCC) is an Academy of Model Aeronautics (AMA)
+          chartered club that has been flying at Kissner Field for nearly 40 years. We are one of the
+          largest dedicated RC clubs in the South, with about 139 members ranging from casual weekend
+          flyers to world-class competition pilots.
+        </p>
+        <p>
+          Our members include hobbyists who build their own planes, casual flyers who come out for
+          fun, and licensed pilots who share a love of aviation. Guest pilots and the general public
+          are welcome — AMA membership is required to fly at the field.
+        </p>
+      </section>
+
+      <section class="content-section">
+        <h2>Membership</h2>
+        <p>
+          BRRCC offers open membership. The public is welcome at our monthly meetings — please attend
+          a meeting to learn about joining the club.
+        </p>
+        <ul>
+          <li>Pilot instruction and training available</li>
+          <li>Regular club meetings and cookouts</li>
+          <li>Events open to other AMA clubs and members</li>
+          <li>No drugs or alcohol; model inspection required</li>
+        </ul>
+      </section>
+
+      <section class="content-section">
+        <h2>Member Meetings</h2>
+        <ul class="detail-list">
+          <li><strong>When</strong> 1st Tuesday of each month, 6:30 PM</li>
+          <li><strong>Where</strong> East Baton Rouge Parish Main Branch Library</li>
+          <li><strong>Who</strong> The public is welcome</li>
+        </ul>
+        <p>
+          Meeting details are also posted on our
+          <a href="https://www.facebook.com/groups/BRRCC" target="_blank" rel="noopener noreferrer">Facebook group</a>.
+        </p>
+      </section>
+
+      <section class="content-section">
+        <h2>AMA Membership</h2>
+        <p>
+          AMA membership is required to fly at Kissner Field. Visit
+          <a href="https://www.modelaircraft.org" target="_blank" rel="noopener noreferrer">modelaircraft.org</a>
+          to join or renew.
+        </p>
+      </section>
+    </div>
+  </main>
+</BaseLayout>

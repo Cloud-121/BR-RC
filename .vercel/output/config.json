@@ -1,0 +1,56 @@
+{
+	"version": 3,
+	"routes": [
+		{
+			"handle": "filesystem"
+		},
+		{
+			"src": "^/_astro/(.*)$",
+			"headers": {
+				"cache-control": "public, max-age=31536000, immutable"
+			},
+			"continue": true
+		},
+		{
+			"src": "^/_server-islands/([^/]+?)/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/_image/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/media/image/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/media/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/events/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/kissner-field/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/media/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/404/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/.*$",
+			"dest": "_render",
+			"status": 404
+		}
+	]
+}

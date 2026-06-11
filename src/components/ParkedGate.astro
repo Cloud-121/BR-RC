@@ -1,0 +1,344 @@
+---
+const REDIRECT_MS = 8000;
+const FACEBOOK_URL = 'https://www.facebook.com/groups/BRRCC';
+---
+
+<div class="parked-gate" id="parked-gate">
+  <div class="parked-gate__content">
+    <p class="parked-gate__text" id="parked-text">parked</p>
+    <p class="parked-gate__redirect" id="parked-redirect">redirecting…</p>
+    <div class="parked-gate__runway">
+      <div class="parked-gate__scene" aria-hidden="true">
+        <div class="parked-gate__sun"></div>
+        <div class="parked-gate__cloud parked-gate__cloud--1"></div>
+        <div class="parked-gate__cloud parked-gate__cloud--2"></div>
+        <div class="parked-gate__cloud parked-gate__cloud--3"></div>
+        <div class="parked-gate__treeline"></div>
+        <div class="parked-gate__grass"></div>
+        <div class="parked-gate__windsock">
+          <span class="parked-gate__windsock-flag"></span>
+        </div>
+        <div class="parked-gate__strip">
+          <div class="parked-gate__strip-threshold"></div>
+          <span class="parked-gate__strip-numbers">27</span>
+          <div class="parked-gate__strip-centerline"></div>
+        </div>
+      </div>
+      <img
+        class="parked-gate__plane parked-gate__plane--takeoff"
+        id="parked-plane"
+        src="/images/rc-plane.svg"
+        alt=""
+        width="360"
+        height="132"
+        loading="eager"
+        decoding="async"
+      />
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ REDIRECT_MS, FACEBOOK_URL }}>
+  const STORAGE_KEY = 'brrc-unlocked';
+  const CLICKS_NEEDED = 10;
+
+  const gate = document.getElementById('parked-gate');
+  const text = document.getElementById('parked-text');
+  const plane = document.getElementById('parked-plane');
+
+  if (gate && text && sessionStorage.getItem(STORAGE_KEY) !== 'true') {
+    let clicks = 0;
+    let unlocked = false;
+    let redirectTimer;
+
+    function cancelRedirect() {
+      window.clearTimeout(redirectTimer);
+      plane?.classList.remove('parked-gate__plane--takeoff');
+    }
+
+    function unlock() {
+      unlocked = true;
+      cancelRedirect();
+      sessionStorage.setItem(STORAGE_KEY, 'true');
+      document.documentElement.removeAttribute('data-parked');
+      gate.hidden = true;
+    }
+
+    text.addEventListener('click', () => {
+      clicks += 1;
+      if (clicks >= CLICKS_NEEDED) {
+        unlock();
+      }
+    });
+
+    redirectTimer = window.setTimeout(() => {
+      if (!unlocked) {
+        window.location.href = FACEBOOK_URL;
+      }
+    }, REDIRECT_MS);
+  } else if (gate) {
+    gate.hidden = true;
+  }
+</script>
+
+<style>
+  .parked-gate {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-cream);
+  }
+
+  .parked-gate[hidden] {
+    display: none;
+  }
+
+  .parked-gate__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    width: min(100%, 38rem);
+    padding: 0 1.25rem;
+  }
+
+  .parked-gate__text {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 8vw, 4rem);
+    font-weight: 700;
+    color: var(--color-green);
+    margin: 0;
+    cursor: pointer;
+    user-select: none;
+    text-transform: lowercase;
+  }
+
+  .parked-gate__redirect {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    text-transform: lowercase;
+    letter-spacing: 0.02em;
+  }
+
+  .parked-gate__runway {
+    position: relative;
+    width: 100%;
+    min-height: clamp(10rem, 32vw, 14.5rem);
+    margin-top: 0.75rem;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 18px rgba(30, 77, 58, 0.18);
+  }
+
+  .parked-gate__scene {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #9ecdee 0%, #c3e2f5 55%, #e3f2fb 72%);
+  }
+
+  .parked-gate__sun {
+    position: absolute;
+    top: 9%;
+    right: 7%;
+    width: clamp(1.8rem, 5vw, 2.6rem);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, #fffbe6, #ffe27a 65%, #ffd54f);
+    box-shadow: 0 0 24px 8px rgba(255, 224, 130, 0.55);
+  }
+
+  .parked-gate__cloud {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 999px;
+  }
+
+  .parked-gate__cloud::before,
+  .parked-gate__cloud::after {
+    content: '';
+    position: absolute;
+    background: inherit;
+    border-radius: 50%;
+  }
+
+  .parked-gate__cloud::before {
+    width: 55%;
+    height: 160%;
+    left: 16%;
+    bottom: 35%;
+  }
+
+  .parked-gate__cloud::after {
+    width: 40%;
+    height: 120%;
+    right: 18%;
+    bottom: 45%;
+  }
+
+  .parked-gate__cloud--1 {
+    top: 22%;
+    left: 9%;
+    width: 17%;
+    height: 7%;
+  }
+
+  .parked-gate__cloud--2 {
+    top: 12%;
+    left: 42%;
+    width: 21%;
+    height: 8%;
+    opacity: 0.85;
+  }
+
+  .parked-gate__cloud--3 {
+    top: 32%;
+    right: 12%;
+    width: 14%;
+    height: 6%;
+    opacity: 0.7;
+  }
+
+  .parked-gate__treeline {
+    position: absolute;
+    left: -2%;
+    right: -2%;
+    bottom: 26%;
+    height: 9%;
+    background: #5e8f6c;
+    border-radius: 999px 999px 0 0;
+    opacity: 0.55;
+    filter: blur(1px);
+  }
+
+  .parked-gate__grass {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 28%;
+    background: linear-gradient(180deg, #8fb89a 0%, var(--color-green-light, #2d6b52) 60%, #275643 100%);
+  }
+
+  .parked-gate__strip {
+    position: absolute;
+    left: -2%;
+    right: -2%;
+    bottom: 5%;
+    height: 15%;
+    background: linear-gradient(180deg, #79766f 0%, #5f5d57 55%, #4e4c47 100%);
+    border-top: 2px solid rgba(255, 255, 255, 0.75);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.45);
+    box-shadow: 0 3px 6px rgba(20, 50, 38, 0.35);
+  }
+
+  .parked-gate__strip-centerline {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 0;
+    border-top: 3px dashed rgba(255, 255, 255, 0.85);
+    transform: translateY(-50%);
+  }
+
+  .parked-gate__strip-threshold {
+    position: absolute;
+    top: 12%;
+    bottom: 12%;
+    left: 2.5%;
+    width: 7%;
+    background: repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.9) 0,
+      rgba(255, 255, 255, 0.9) 4px,
+      transparent 4px,
+      transparent 9px
+    );
+  }
+
+  .parked-gate__strip-numbers {
+    position: absolute;
+    top: 50%;
+    left: 12%;
+    transform: translateY(-50%);
+    font-family: var(--font-body);
+    font-size: clamp(0.6rem, 1.8vw, 0.8rem);
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.92);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  }
+
+  .parked-gate__windsock {
+    position: absolute;
+    left: 7%;
+    bottom: 20%;
+    width: 3px;
+    height: 17%;
+    background: linear-gradient(180deg, #f5f5f5, #b0b0b0);
+    border-radius: 2px;
+  }
+
+  .parked-gate__windsock-flag {
+    position: absolute;
+    top: -2px;
+    left: 3px;
+    width: clamp(1.1rem, 3.5vw, 1.6rem);
+    height: 0.45rem;
+    background: linear-gradient(90deg, #ff7043, #ffab91);
+    clip-path: polygon(0 0, 100% 28%, 100% 72%, 0 100%);
+    transform-origin: left center;
+    animation: parked-windsock 2.4s ease-in-out infinite alternate;
+  }
+
+  @keyframes parked-windsock {
+    from {
+      transform: rotate(-4deg) scaleX(1);
+    }
+    to {
+      transform: rotate(5deg) scaleX(0.92);
+    }
+  }
+
+  .parked-gate__plane {
+    position: absolute;
+    left: 6%;
+    bottom: 9.5%;
+    width: clamp(7rem, 26vw, 11rem);
+    height: auto;
+    transform-origin: 60% 70%;
+    z-index: 1;
+    filter: drop-shadow(0 6px 4px rgba(20, 50, 38, 0.3));
+  }
+
+  .parked-gate__plane--takeoff {
+    animation: parked-takeoff 8s ease-in forwards;
+  }
+
+  @keyframes parked-takeoff {
+    0% {
+      transform: translate(0, 0) rotate(0deg) scale(1);
+      opacity: 1;
+    }
+    38% {
+      transform: translate(150%, 0) rotate(0deg) scale(1);
+      opacity: 1;
+    }
+    52% {
+      transform: translate(215%, -30%) rotate(-9deg) scale(1);
+      opacity: 1;
+    }
+    78% {
+      transform: translate(340%, -130%) rotate(-15deg) scale(0.92);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(110vw, -60vh) rotate(-18deg) scale(0.8);
+      opacity: 0;
+    }
+  }
+</style>

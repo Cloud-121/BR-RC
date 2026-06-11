@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Contact the Baton Rouge RC Club — club officers, field location, and Facebook group."><link rel="icon" type="image/jpeg" href="/images/logo.jpg"><title>Contact Us | Baton Rouge RC Club</title><script>
+      if (sessionStorage.getItem('brrc-unlocked') !== 'true') {
+        document.documentElement.dataset.parked = 'true';
+      }
+    </script><style>
+      html[data-parked] .page-layout {
+        visibility: hidden;
+      }
+      html:not([data-parked]) .parked-gate {
+        display: none;
+      }
+    </style><link rel="stylesheet" href="/_astro/HeroStrip.soqyKZL5.css"></head> <body> <div class="parked-gate" id="parked-gate" data-astro-cid-zwbqjuuf> <div class="parked-gate__content" data-astro-cid-zwbqjuuf> <p class="parked-gate__text" id="parked-text" data-astro-cid-zwbqjuuf>parked</p> <p class="parked-gate__redirect" id="parked-redirect" data-astro-cid-zwbqjuuf>redirecting…</p> <div class="parked-gate__runway" data-astro-cid-zwbqjuuf> <div class="parked-gate__runway-field" aria-hidden="true" data-astro-cid-zwbqjuuf> <div class="parked-gate__runway-strip" data-astro-cid-zwbqjuuf> <div class="parked-gate__runway-threshold" data-astro-cid-zwbqjuuf> <span data-astro-cid-zwbqjuuf></span> <span data-astro-cid-zwbqjuuf></span> <span data-astro-cid-zwbqjuuf></span> <span data-astro-cid-zwbqjuuf></span> <span data-astro-cid-zwbqjuuf></span> <span data-astro-cid-zwbqjuuf></span> </div> <div class="parked-gate__runway-centerline" data-astro-cid-zwbqjuuf></div> <div class="parked-gate__runway-numbers" data-astro-cid-zwbqjuuf>27</div> </div> </div> <img class="parked-gate__plane parked-gate__plane--takeoff" id="parked-plane" src="/images/rc-plane.svg" alt="" width="320" height="120" loading="eager" decoding="async" data-astro-cid-zwbqjuuf> </div> </div> </div> <script>(function(){const REDIRECT_MS = 8000;
+const FACEBOOK_URL = "https://www.facebook.com/groups/BRRCC";
+
+  const STORAGE_KEY = 'brrc-unlocked';
+  const CLICKS_NEEDED = 10;
+
+  const gate = document.getElementById('parked-gate');
+  const text = document.getElementById('parked-text');
+  const plane = document.getElementById('parked-plane');
+
+  if (gate && text && sessionStorage.getItem(STORAGE_KEY) !== 'true') {
+    let clicks = 0;
+    let unlocked = false;
+    let redirectTimer;
+
+    function cancelRedirect() {
+      window.clearTimeout(redirectTimer);
+      plane?.classList.remove('parked-gate__plane--takeoff');
+    }
+
+    function unlock() {
+      unlocked = true;
+      cancelRedirect();
+      sessionStorage.setItem(STORAGE_KEY, 'true');
+      document.documentElement.removeAttribute('data-parked');
+      gate.hidden = true;
+    }
+
+    text.addEventListener('click', () => {
+      clicks += 1;
+      if (clicks >= CLICKS_NEEDED) {
+        unlock();
+      }
+    });
+
+    redirectTimer = window.setTimeout(() => {
+      if (!unlocked) {
+        window.location.href = FACEBOOK_URL;
+      }
+    }, REDIRECT_MS);
+  } else if (gate) {
+    gate.hidden = true;
+  }
+})();</script> <div class="page-layout"> <header class="site-header"> <p class="header-top">AMA Chartered · Meetings 1st Tuesday, 6:30 PM · Kissner Field, Port Allen</p> <div class="header-inner"> <a href="/" class="brand"> <img src="/images/logo.jpg" alt="Baton Rouge RC Club logo" width="120" height="56"> <span class="brand-title">Baton Rouge Radio Control Club</span> </a> <nav class="site-nav" aria-label="Main"> <input type="checkbox" id="nav-toggle" class="nav-toggle"> <label for="nav-toggle" class="nav-toggle-label">Menu</label> <ul> <li> <a href="/"> Home </a> </li><li> <a href="/kissner-field"> Kissner Field </a> </li><li> <a href="/events"> Events </a> </li><li> <a href="/media"> Media </a> </li><li> <a href="/about"> About </a> </li><li> <a href="/contact" aria-current="page"> Contact </a> </li> </ul> </nav> </div> </header>  <section class="hero hero--compact"> <div class="hero-inner"> <h1>Contact Us</h1>   </div> </section> <main class="page-main"> <div class="content-panel"> <section class="content-section"> <h2>Club Contact</h2> <p>For general club inquiries:</p> <ul class="detail-list"> <li><strong>Name</strong> Lester May</li> <li><strong>Phone</strong> <a href="tel:+12252816884">225-281-6884</a></li> <li><strong>Email</strong> <a href="mailto:LMAY@COX.NET">LMAY@COX.NET</a></li> </ul> </section> <section class="content-section"> <h2>Kissner Field</h2> <ul class="detail-list"> <li><strong>Address</strong> 8940 Ronald Reagan Highway, Port Allen, LA 70767</li> <li> <strong>Map</strong> <a href="https://www.google.com/maps/place/BRRC+Club+Runway+at+Kissner+Field/@30.503459,-91.3524129,620m/data=!3m1!1e3!4m12!1m5!3m4!2zMzDCsDMwJzEyLjUiTiA5McKwMjAnNTkuNCJX!8m2!3d30.503459!4d-91.349838!3m5!1s0x8624181383fe48c3:0xaf280e4c173f1a43!8m2!3d30.5040508!4d-91.3496256!16s%2Fg%2F11cjy2ny82?entry=ttu&amp;g_ep=EgoyMDI2MDYwMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer">Open in Google Maps</a> </li> </ul> <p><a href="/kissner-field" class="btn btn-small">Field details &amp; hours</a></p> </section> <section class="content-section"> <h2>Red Stick Classic</h2> <p>For questions about the Red Stick Classic scale contest:</p> <ul class="detail-list"> <li><strong>CD</strong> Jeffrey Pike</li> <li><strong>Phone</strong> <a href="tel:+12253372037">(225) 337-2037</a></li> <li> <strong>Email</strong> <a href="mailto:jeffreykeithpike@hotmail.com">jeffreykeithpike@hotmail.com</a> </li> </ul> </section> <aside class="meetings-notice meetings-notice--compact"> <h2>Club Meetings</h2> <p>
+We meet every <strong>1st Tuesday of each month, 6:30 PM</strong> at the East Baton Rouge Parish Main Branch Library. The public is welcome.
+</p> <p> <a href="/about">More about the club</a> </p> </aside> </div> <div class="facebook-cta"> <p>
+The best way to connect with members and get quick answers —
+<a href="https://www.facebook.com/groups/BRRCC" target="_blank" rel="noopener noreferrer">join our Facebook group</a>.
+</p> </div> </main>  <footer class="site-footer"> <div class="footer-inner"> <div> <p class="footer-club">Baton Rouge Radio Control Club</p> <p class="footer-meta">&copy; 2026 · Flying at Kissner Field since the 1980s</p> </div> <a href="https://www.facebook.com/groups/BRRCC" class="social-link" target="_blank" rel="noopener noreferrer"> <svg viewBox="0 0 24 24" aria-hidden="true"> <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path> </svg>
+Facebook Group
+</a> </div> </footer> </div> </body></html>

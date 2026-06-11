@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroStrip from '../components/HeroStrip.astro';
+import { FIELD_GOOGLE_MAPS_URL } from '../lib/fieldLocation';
+import MeetingsNotice from '../components/MeetingsNotice.astro';
+---
+
+<BaseLayout
+  title="Contact Us"
+  description="Contact the Baton Rouge RC Club — club officers, field location, and Facebook group."
+>
+  <HeroStrip headline="Contact Us" showButton={false} compact />
+
+  <main class="page-main">
+    <div class="content-panel">
+      <section class="content-section">
+        <h2>Club Contact</h2>
+        <p>For general club inquiries:</p>
+        <ul class="detail-list">
+          <li><strong>Name</strong> Lester May</li>
+          <li><strong>Phone</strong> <a href="tel:+12252816884">225-281-6884</a></li>
+          <li><strong>Email</strong> <a href="mailto:LMAY@COX.NET">LMAY@COX.NET</a></li>
+        </ul>
+      </section>
+
+      <section class="content-section">
+        <h2>Kissner Field</h2>
+        <ul class="detail-list">
+          <li><strong>Address</strong> 8940 Ronald Reagan Highway, Port Allen, LA 70767</li>
+          <li>
+            <strong>Map</strong>
+            <a
+              href={FIELD_GOOGLE_MAPS_URL}
+              target="_blank"
+              rel="noopener noreferrer">Open in Google Maps</a
+            >
+          </li>
+        </ul>
+        <p><a href="/kissner-field" class="btn btn-small">Field details &amp; hours</a></p>
+      </section>
+
+      <section class="content-section">
+        <h2>Red Stick Classic</h2>
+        <p>For questions about the Red Stick Classic scale contest:</p>
+        <ul class="detail-list">
+          <li><strong>CD</strong> Jeffrey Pike</li>
+          <li><strong>Phone</strong> <a href="tel:+12253372037">(225) 337-2037</a></li>
+          <li>
+            <strong>Email</strong>
+            <a href="mailto:jeffreykeithpike@hotmail.com">jeffreykeithpike@hotmail.com</a>
+          </li>
+        </ul>
+      </section>
+
+      <MeetingsNotice compact />
+    </div>
+
+    <div class="facebook-cta">
+      <p>
+        The best way to connect with members and get quick answers —
+        <a href="https://www.facebook.com/groups/BRRCC" target="_blank" rel="noopener noreferrer">join our Facebook group</a>.
+      </p>
+    </div>
+  </main>
+</BaseLayout>

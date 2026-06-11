@@ -1,0 +1,80 @@
+---
+export const prerender = false;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroStrip from '../../components/HeroStrip.astro';
+import EventCard from '../../components/EventCard.astro';
+import MeetingsNotice from '../../components/MeetingsNotice.astro';
+import { fetchGroupEvents, type ClubEvent } from '../../lib/fetchGroupEvents';
+
+const FACEBOOK_GROUP_URL = 'https://www.facebook.com/groups/BRRCC';
+
+let events: ClubEvent[] = [];
+let loadError: string | null = null;
+
+try {
+  events = await fetchGroupEvents();
+} catch (error) {
+  loadError =
+    error instanceof Error
+      ? error.message
+      : 'Unable to load events from Facebook right now.';
+}
+---
+
+<BaseLayout
+  title="Events"
+  description="Upcoming events at Baton Rouge RC Club — fly-ins and competitions at Kissner Field."
+>
+  <HeroStrip headline="Events" showButton={false} compact />
+
+  <main class="page-main">
+    <div class="content-panel">
+      <p>
+        The club hosts competitions, fun flies, and informal gatherings throughout the year at
+        Kissner Field. Upcoming events from our Facebook group are listed below.
+      </p>
+    </div>
+
+    <MeetingsNotice compact />
+
+    {
+      loadError ? (
+        <div class="content-panel events-status events-status--error">
+          <p>{loadError}</p>
+          <p>
+            <a href={FACEBOOK_GROUP_URL} target="_blank" rel="noopener noreferrer">
+              View events on Facebook
+            </a>
+          </p>
+        </div>
+      ) : events.length === 0 ? (
+        <div class="content-panel events-status">
+          <p>No upcoming events posted yet.</p>
+          <p>
+            <a href={FACEBOOK_GROUP_URL} target="_blank" rel="noopener noreferrer">
+              Check the BRRCC Facebook group
+            </a>{' '}
+            for the latest announcements.
+          </p>
+        </div>
+      ) : (
+        events.map((event) => <EventCard event={event} />)
+      )
+    }
+
+    {
+      !loadError && events.length > 0 && (
+        <div class="facebook-cta">
+          <p>
+            More details and additional announcements on{' '}
+            <a href={FACEBOOK_GROUP_URL} target="_blank" rel="noopener noreferrer">
+              our Facebook group
+            </a>
+            .
+          </p>
+        </div>
+      )
+    }
+  </main>
+</BaseLayout>

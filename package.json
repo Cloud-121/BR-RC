@@ -1,0 +1,23 @@
+{
+  "name": "br-rc",
+  "type": "module",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/vercel": "^10.0.8",
+    "astro": "^6.4.4",
+    "axios": "^1.17.0",
+    "facebook-event-scraper": "^0.2.7"
+  },
+  "devDependencies": {
+    "@vercel/node": "^5.8.11"
+  }
+}

@@ -1,0 +1,78 @@
+---
+export const prerender = false;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroStrip from '../../components/HeroStrip.astro';
+import MediaGrid from '../../components/MediaGrid.astro';
+import { fetchGroupMedia, type ClubMediaItem } from '../../lib/fetchGroupMedia';
+
+const FACEBOOK_GROUP_MEDIA_URL = 'https://www.facebook.com/groups/BRRCC/media';
+const FACEBOOK_GROUP_URL = 'https://www.facebook.com/groups/BRRCC';
+
+let media: ClubMediaItem[] = [];
+let loadError: string | null = null;
+
+try {
+  media = await fetchGroupMedia();
+} catch (error) {
+  loadError =
+    error instanceof Error
+      ? error.message
+      : 'Unable to load media from Facebook right now.';
+}
+---
+
+<BaseLayout
+  title="Media"
+  description="Photos and videos from the Baton Rouge RC Club — fly days, events, and life at Kissner Field."
+>
+  <HeroStrip headline="Media" showButton={false} compact />
+
+  <main class="page-main">
+    <div class="content-panel">
+      <p>
+        Recent photos and videos shared by club members in our Facebook group — fly days at Kissner
+        Field, events, and more.
+      </p>
+    </div>
+
+    {
+      loadError ? (
+        <div class="content-panel events-status events-status--error">
+          <p>{loadError}</p>
+          <p>
+            <a href={FACEBOOK_GROUP_MEDIA_URL} target="_blank" rel="noopener noreferrer">
+              View media on Facebook
+            </a>
+          </p>
+        </div>
+      ) : media.length === 0 ? (
+        <div class="content-panel events-status">
+          <p>No photos or videos posted yet.</p>
+          <p>
+            <a href={FACEBOOK_GROUP_MEDIA_URL} target="_blank" rel="noopener noreferrer">
+              Check the BRRCC Facebook group
+            </a>{' '}
+            for the latest media.
+          </p>
+        </div>
+      ) : (
+        <MediaGrid media={media} />
+      )
+    }
+
+    {
+      !loadError && media.length > 0 && (
+        <div class="facebook-cta">
+          <p>
+            More photos and videos on{' '}
+            <a href={FACEBOOK_GROUP_URL} target="_blank" rel="noopener noreferrer">
+              our Facebook group
+            </a>
+            .
+          </p>
+        </div>
+      )
+    }
+  </main>
+</BaseLayout>

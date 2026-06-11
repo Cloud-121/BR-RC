@@ -1,0 +1,41 @@
+---
+import MediaGrid from './MediaGrid.astro';
+import type { ClubMediaItem } from '../lib/fetchGroupMedia';
+
+interface Props {
+  media?: ClubMediaItem[];
+  error?: string | null;
+}
+
+const FACEBOOK_GROUP_MEDIA_URL = 'https://www.facebook.com/groups/BRRCC/media';
+const { media = [], error = null } = Astro.props;
+---
+
+<section class="media-preview" aria-labelledby="media-preview-heading">
+  <div class="media-preview__header">
+    <h2 id="media-preview-heading">From the Field</h2>
+    <a href="/media">View all media</a>
+  </div>
+
+  {
+    error ? (
+      <p class="media-preview__fallback">
+        Photos and videos are shared in our{' '}
+        <a href={FACEBOOK_GROUP_MEDIA_URL} target="_blank" rel="noopener noreferrer">
+          Facebook group
+        </a>
+        .
+      </p>
+    ) : media.length === 0 ? (
+      <p class="media-preview__fallback">
+        No recent photos or videos yet. Check our{' '}
+        <a href={FACEBOOK_GROUP_MEDIA_URL} target="_blank" rel="noopener noreferrer">
+          Facebook group
+        </a>
+        .
+      </p>
+    ) : (
+      <MediaGrid media={media} showFilters={false} />
+    )
+  }
+</section>
