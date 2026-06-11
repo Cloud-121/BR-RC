@@ -1,70 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 120" width="320" height="120" aria-hidden="true">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 132" width="360" height="132" aria-hidden="true">
   <defs>
-    <linearGradient id="fuselage" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#e8e8e8"/>
-      <stop offset="45%" stop-color="#ffffff"/>
-      <stop offset="100%" stop-color="#d0d0d0"/>
+    <linearGradient id="fus" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbfbfb"/>
+      <stop offset="0.55" stop-color="#eeeeee"/>
+      <stop offset="1" stop-color="#cfcfcf"/>
     </linearGradient>
-    <linearGradient id="wing" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="100%" stop-color="#e0e0e0"/>
+    <linearGradient id="wing" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#d6d6d6"/>
     </linearGradient>
-    <linearGradient id="red" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#c62828"/>
-      <stop offset="100%" stop-color="#e53935"/>
+    <linearGradient id="red" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e53935"/>
+      <stop offset="1" stop-color="#b71c1c"/>
     </linearGradient>
-    <linearGradient id="canopy" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#90caf9"/>
-      <stop offset="100%" stop-color="#42a5f5"/>
+    <linearGradient id="canopy" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#bbdefb"/>
+      <stop offset="1" stop-color="#1e88e5"/>
+    </linearGradient>
+    <linearGradient id="nacelle" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f5f5f5"/>
+      <stop offset="1" stop-color="#bdbdbd"/>
     </linearGradient>
   </defs>
 
+  <!-- Horizontal stabilizer (behind fuselage) -->
+  <path d="M34 79 L98 75 Q103 75 102 80 L100 85 Q99 88 94 88 L40 89 Q33 89 34 84 Z"
+        fill="#e8e8e8" stroke="#aaaaaa" stroke-width="1"/>
+
+  <!-- Vertical fin -->
+  <path d="M72 80 L56 27 Q54 21 61 20 L74 18 Q79 17 81 23 L95 76 Z"
+        fill="url(#wing)" stroke="#aaaaaa" stroke-width="1"/>
+  <path d="M68 68 L58 32 Q57 28 62 27 L70 26 Q74 25 75 29 L85 65 Z" fill="url(#red)"/>
+
   <!-- Fuselage -->
-  <path fill="url(#fuselage)" stroke="#9e9e9e" stroke-width="0.8"
-    d="M28 62 L48 58 L72 56 L120 54 L168 54 L210 56 L248 60 L268 64 L272 66 L268 70 L248 72 L210 74 L168 76 L120 76 L72 74 L48 72 L28 68 Z"/>
+  <path d="M329 81
+           C329 71 318 65 303 64
+           L262 61
+           C238 59.5 212 61 192 65
+           L90 75
+           C83 76 83 85 90 86
+           L192 93
+           C218 96 248 97 268 96
+           L303 96
+           C318 95 329 90 329 81 Z"
+        fill="url(#fus)" stroke="#9e9e9e" stroke-width="1"/>
+
   <!-- Red nose cone -->
-  <path fill="url(#red)" stroke="#b71c1c" stroke-width="0.6"
-    d="M248 60 L268 64 L272 66 L268 70 L248 72 L210 74 L210 56 Z"/>
+  <path d="M329 81 C329 71 318 65 303 64 L290 63.1 L290 96.4 L303 96 C318 95 329 90 329 81 Z"
+        fill="url(#red)" stroke="#9c1313" stroke-width="0.8"/>
+
+  <!-- Red belly stripe -->
+  <path d="M170 88 L290 88.5 L290 96.4 L268 96 C240 96.5 205 94 170 91.5 Z"
+        fill="url(#red)" opacity="0.9"/>
+
   <!-- Canopy -->
-  <ellipse cx="218" cy="62" rx="14" ry="8" fill="url(#canopy)" stroke="#1565c0" stroke-width="0.6"/>
-  <ellipse cx="218" cy="61" rx="10" ry="4" fill="rgba(255,255,255,0.35)"/>
+  <path d="M254 61.5 L297 64 C296 54 287 48 276 47.5 L266 47.5 C258 49 254 54 254 61.5 Z"
+        fill="url(#canopy)" stroke="#1565c0" stroke-width="0.9"/>
+  <path d="M260 54 Q268 49.5 280 50 Q288 50.5 292 55 Q282 51.5 272 51.8 Q264 52 260 54 Z"
+        fill="rgba(255,255,255,0.55)"/>
 
   <!-- High wing -->
-  <path fill="url(#wing)" stroke="#bdbdbd" stroke-width="0.7"
-    d="M88 48 L200 44 L204 52 L92 56 Z"/>
-  <!-- Red wing stripe -->
-  <path fill="url(#red)" opacity="0.9"
-    d="M130 47 L170 45 L172 50 L132 52 Z"/>
+  <path d="M152 47 L260 43 Q272 43 272 50 Q272 56 262 57 L154 60 Q144 60 144 53.5 Q144 48 152 47 Z"
+        fill="url(#wing)" stroke="#aaaaaa" stroke-width="1"/>
+  <!-- Red wingtip + stripe -->
+  <path d="M152 47 L168 46.4 L170 59.5 L154 60 Q144 60 144 53.5 Q144 48 152 47 Z" fill="url(#red)"/>
+  <path d="M196 45.6 L214 45 L216 58.2 L198 58.7 Z" fill="url(#red)" opacity="0.85"/>
 
-  <!-- Tail fin -->
-  <path fill="#ffffff" stroke="#bdbdbd" stroke-width="0.6"
-    d="M32 58 L28 38 L36 36 L44 56 Z"/>
-  <path fill="url(#red)" opacity="0.85"
-    d="M30 52 L29 42 L34 40 L38 50 Z"/>
-  <!-- Horizontal stabilizer -->
-  <path fill="#f5f5f5" stroke="#bdbdbd" stroke-width="0.6"
-    d="M36 66 L72 68 L70 74 L38 72 Z"/>
+  <!-- Motor pylon -->
+  <path d="M158 47.5 L162 34 L180 34 L178 47 Z" fill="#9e9e9e" stroke="#7d7d7d" stroke-width="0.7"/>
 
-  <!-- Pusher prop pylon -->
-  <rect x="24" y="58" width="6" height="12" rx="1" fill="#757575"/>
-  <!-- Spinning prop blur -->
-  <ellipse cx="18" cy="64" rx="10" ry="3" fill="rgba(80,80,80,0.35)"/>
-  <ellipse cx="18" cy="64" rx="3" ry="10" fill="rgba(80,80,80,0.25)"/>
-  <circle cx="18" cy="64" r="2.5" fill="#424242"/>
+  <!-- Motor nacelle (pusher) -->
+  <rect x="154" y="26" width="40" height="15" rx="7.5" fill="url(#nacelle)" stroke="#9e9e9e" stroke-width="0.9"/>
+  <rect x="184" y="29" width="9" height="9" rx="4" fill="url(#red)"/>
 
-  <!-- Tricycle landing gear -->
-  <path fill="none" stroke="#616161" stroke-width="1.5" stroke-linecap="round"
-    d="M210 76 L210 88 M200 76 L200 90 M72 74 L72 90"/>
-  <circle cx="210" cy="90" r="4" fill="#424242" stroke="#212121" stroke-width="0.5"/>
-  <circle cx="200" cy="92" r="3.5" fill="#424242" stroke="#212121" stroke-width="0.5"/>
-  <circle cx="72" cy="92" r="3.5" fill="#424242" stroke="#212121" stroke-width="0.5"/>
+  <!-- Pusher prop blur + spinner (rear-facing, left of nacelle) -->
+  <ellipse cx="149" cy="33.5" rx="3.4" ry="22" fill="rgba(70,70,70,0.30)"/>
+  <ellipse cx="149" cy="33.5" rx="2" ry="26" fill="rgba(70,70,70,0.16)"/>
+  <circle cx="150" cy="33.5" r="4" fill="#3d3d3d"/>
+  <circle cx="150" cy="33.5" r="1.6" fill="#757575"/>
 
-  <!-- Wing strut -->
-  <path fill="none" stroke="#9e9e9e" stroke-width="1"
-    d="M130 56 L130 74 M170 54 L170 74"/>
+  <!-- Nose gear -->
+  <path d="M299 96 L299 113" stroke="#616161" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="299" cy="116" r="7.5" fill="#2f2f2f" stroke="#1a1a1a" stroke-width="1"/>
+  <circle cx="299" cy="116" r="3" fill="#8d8d8d"/>
 
-  <!-- Panel lines -->
-  <path fill="none" stroke="#bdbdbd" stroke-width="0.4" opacity="0.6"
-    d="M120 54 L120 76 M168 54 L168 76"/>
+  <!-- Main gear -->
+  <path d="M210 94 L203 113" stroke="#616161" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="201" cy="116" r="8.5" fill="#2f2f2f" stroke="#1a1a1a" stroke-width="1"/>
+  <circle cx="201" cy="116" r="3.4" fill="#8d8d8d"/>
+
+  <!-- Panel line details -->
+  <path d="M254 61.8 L252 95.6 M192 65 L192 93" stroke="#bdbdbd" stroke-width="0.6" opacity="0.7" fill="none"/>
 </svg>

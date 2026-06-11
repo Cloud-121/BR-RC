@@ -1,6 +1,6 @@
-import { c as createComponent } from './astro-component_lHQ3Yt5C.mjs';
+import { c as createComponent } from './astro-component_LPgCNcwW.mjs';
 import 'piccolore';
-import { m as maybeRenderHead, h as addAttribute, k as renderTemplate, o as renderComponent, q as Fragment } from './entrypoint_DxZenSl8.mjs';
+import { m as maybeRenderHead, h as addAttribute, k as renderTemplate, o as renderComponent, q as Fragment } from './entrypoint_DPvAqX-D.mjs';
 import 'clsx';
 
 const MAX_WIND_MPH = 15;

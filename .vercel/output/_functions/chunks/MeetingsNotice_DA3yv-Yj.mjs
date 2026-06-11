@@ -1,6 +1,6 @@
-import { c as createComponent } from './astro-component_lHQ3Yt5C.mjs';
+import { c as createComponent } from './astro-component_LPgCNcwW.mjs';
 import 'piccolore';
-import { m as maybeRenderHead, h as addAttribute, k as renderTemplate, o as renderComponent, q as Fragment } from './entrypoint_DxZenSl8.mjs';
+import { m as maybeRenderHead, h as addAttribute, k as renderTemplate, o as renderComponent, q as Fragment } from './entrypoint_DPvAqX-D.mjs';
 
 const $$MeetingsNotice = createComponent(($$result, $$props, $$slots) => {
   const Astro2 = $$result.createAstro($$props, $$slots);

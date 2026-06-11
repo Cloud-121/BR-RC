@@ -59,7 +59,7 @@ The Events page pulls upcoming events from the public BRRCC Facebook group using
 
 - [`src/lib/fetchGroupEvents.ts`](src/lib/fetchGroupEvents.ts) — shared scraper logic
 - [`api/events.ts`](api/events.ts) — JSON endpoint with 6-hour cache
-- [`vercel.json`](vercel.json) — cron job hits `/api/events` every 6 hours to warm the cache
+- [`vercel.json`](vercel.json) — daily cron job hits `/api/events` to warm the cache (Hobby plan limit)
 
 If scraping fails, the Events page shows a fallback message with a link to the [Facebook group](https://www.facebook.com/groups/BRRCC).
 
@@ -71,7 +71,7 @@ The Media page (`/media`) and homepage preview pull recent photos and videos fro
 - [`src/pages/api/media.ts`](src/pages/api/media.ts) — JSON endpoint with 6-hour cache (supports `?limit=N`, max 50)
 - [`src/pages/api/media/image.ts`](src/pages/api/media/image.ts) — proxies Facebook thumbnails so they display reliably in the browser
 - [`api/media.ts`](api/media.ts) — Vercel serverless JSON endpoint (production cron target)
-- [`vercel.json`](vercel.json) — cron job hits `/api/media` every 6 hours to warm the cache
+- [`vercel.json`](vercel.json) — daily cron job hits `/api/media` to warm the cache (Hobby plan limit)
 
 The homepage preview is server-rendered from Facebook directly. Thumbnails are served through `/api/media/image` because Facebook CDN URLs expire quickly when linked directly.
 

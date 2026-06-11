@@ -1,9 +1,9 @@
-import { c as createComponent } from './astro-component_lHQ3Yt5C.mjs';
+import { c as createComponent } from './astro-component_LPgCNcwW.mjs';
 import 'piccolore';
-import { m as maybeRenderHead, h as addAttribute, k as renderTemplate, o as renderComponent } from './entrypoint_DxZenSl8.mjs';
-import { $ as $$BaseLayout, a as $$HeroStrip } from './HeroStrip_CNXLU_0c.mjs';
+import { m as maybeRenderHead, h as addAttribute, k as renderTemplate, o as renderComponent } from './entrypoint_DPvAqX-D.mjs';
+import { $ as $$BaseLayout, a as $$HeroStrip } from './HeroStrip_WuSwtO3z.mjs';
 import 'clsx';
-import { $ as $$MeetingsNotice } from './MeetingsNotice_UdiD_a6m.mjs';
+import { $ as $$MeetingsNotice } from './MeetingsNotice_DA3yv-Yj.mjs';
 import { scrapeFbEventList, EventType } from 'facebook-event-scraper';
 
 const $$EventCard = createComponent(($$result, $$props, $$slots) => {
