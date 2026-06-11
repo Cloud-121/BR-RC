@@ -1,12 +1,14 @@
 ---
-const REDIRECT_MS = 8000;
 const FACEBOOK_URL = 'https://www.facebook.com/groups/BRRCC';
 ---
 
 <div class="parked-gate" id="parked-gate">
   <div class="parked-gate__content">
     <p class="parked-gate__text" id="parked-text">parked</p>
-    <p class="parked-gate__redirect" id="parked-redirect">redirecting…</p>
+    <p class="parked-gate__redirect" id="parked-redirect">
+      redirecting…
+      <a class="parked-gate__link" href={FACEBOOK_URL}>continue to Facebook</a>
+    </p>
     <div class="parked-gate__runway">
       <div class="parked-gate__scene" aria-hidden="true">
         <div class="parked-gate__sun"></div>
@@ -38,22 +40,32 @@ const FACEBOOK_URL = 'https://www.facebook.com/groups/BRRCC';
   </div>
 </div>
 
-<script define:vars={{ REDIRECT_MS, FACEBOOK_URL }}>
-  const STORAGE_KEY = 'brrc-unlocked';
-  const CLICKS_NEEDED = 10;
+<script is:inline>
+  (function () {
+    const REDIRECT_MS = 8000;
+    const FACEBOOK_URL = 'https://www.facebook.com/groups/BRRCC';
+    const STORAGE_KEY = 'brrc-unlocked';
+    const CLICKS_NEEDED = 10;
 
-  const gate = document.getElementById('parked-gate');
-  const text = document.getElementById('parked-text');
-  const plane = document.getElementById('parked-plane');
+    if (sessionStorage.getItem(STORAGE_KEY) === 'true') {
+      const gate = document.getElementById('parked-gate');
+      if (gate) gate.hidden = true;
+      return;
+    }
 
-  if (gate && text && sessionStorage.getItem(STORAGE_KEY) !== 'true') {
+    const gate = document.getElementById('parked-gate');
+    const text = document.getElementById('parked-text');
+    const plane = document.getElementById('parked-plane');
+    if (!gate || !text) return;
+
     let clicks = 0;
     let unlocked = false;
     let redirectTimer;
 
     function cancelRedirect() {
       window.clearTimeout(redirectTimer);
-      plane?.classList.remove('parked-gate__plane--takeoff');
+      document.getElementById('parked-redirect-meta')?.remove();
+      if (plane) plane.classList.remove('parked-gate__plane--takeoff');
     }
 
     function unlock() {
@@ -66,19 +78,13 @@ const FACEBOOK_URL = 'https://www.facebook.com/groups/BRRCC';
 
     text.addEventListener('click', () => {
       clicks += 1;
-      if (clicks >= CLICKS_NEEDED) {
-        unlock();
-      }
+      if (clicks >= CLICKS_NEEDED) unlock();
     });
 
     redirectTimer = window.setTimeout(() => {
-      if (!unlocked) {
-        window.location.href = FACEBOOK_URL;
-      }
+      if (!unlocked) window.location.replace(FACEBOOK_URL);
     }, REDIRECT_MS);
-  } else if (gate) {
-    gate.hidden = true;
-  }
+  })();
 </script>
 
 <style>
@@ -122,6 +128,18 @@ const FACEBOOK_URL = 'https://www.facebook.com/groups/BRRCC';
     color: var(--color-text-muted);
     text-transform: lowercase;
     letter-spacing: 0.02em;
+  }
+
+  .parked-gate__link {
+    display: inline-block;
+    margin-left: 0.35rem;
+    color: var(--color-green-light);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .parked-gate__link:hover {
+    color: var(--color-rust);
   }
 
   .parked-gate__runway {

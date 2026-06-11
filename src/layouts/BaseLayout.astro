@@ -24,6 +24,11 @@ const fullTitle = title === 'Home' ? 'Baton Rouge Radio Control Club' : `${title
     <script is:inline>
       if (sessionStorage.getItem('brrc-unlocked') !== 'true') {
         document.documentElement.dataset.parked = 'true';
+        const meta = document.createElement('meta');
+        meta.id = 'parked-redirect-meta';
+        meta.httpEquiv = 'refresh';
+        meta.content = '8;url=https://www.facebook.com/groups/BRRCC';
+        document.head.appendChild(meta);
       }
     </script>
     <style is:inline>
