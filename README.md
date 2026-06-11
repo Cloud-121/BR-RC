@@ -49,7 +49,7 @@ Live conditions at Kissner Field (temperature, wind, gusts, humidity, precipitat
 
 - [`src/lib/fetchFieldWeather.ts`](src/lib/fetchFieldWeather.ts) — fetches and normalizes current weather
 - [`src/components/FieldWeather.astro`](src/components/FieldWeather.astro) — full panel on Kissner Field, compact summary on Home
-- [`api/weather.ts`](api/weather.ts) — JSON endpoint with 15-minute cache
+- [`src/pages/api/weather.ts`](src/pages/api/weather.ts) — JSON endpoint with 15-minute cache
 
 Conditions are shown in Central Time. The site notes that field conditions can differ from the reading — check the windsock before flying.
 
@@ -58,7 +58,7 @@ Conditions are shown in Central Time. The site notes that field conditions can d
 The Events page pulls upcoming events from the public BRRCC Facebook group using a scraper ([`facebook-event-scraper`](https://github.com/francescov1/facebook-event-scraper)). Meta deprecated the official Groups Events API, so this is a practical workaround.
 
 - [`src/lib/fetchGroupEvents.ts`](src/lib/fetchGroupEvents.ts) — shared scraper logic
-- [`api/events.ts`](api/events.ts) — JSON endpoint with 6-hour cache
+- [`src/pages/api/events.ts`](src/pages/api/events.ts) — JSON endpoint with 6-hour cache
 - [`vercel.json`](vercel.json) — daily cron job hits `/api/events` to warm the cache (Hobby plan limit)
 
 If scraping fails, the Events page shows a fallback message with a link to the [Facebook group](https://www.facebook.com/groups/BRRCC).
@@ -68,9 +68,8 @@ If scraping fails, the Events page shows a fallback message with a link to the [
 The Media page (`/media`) and homepage preview pull recent photos and videos from the public BRRCC Facebook group by scraping the group media pages. Meta does not offer a public API for group media, so this follows the same approach as events.
 
 - [`src/lib/fetchGroupMedia.ts`](src/lib/fetchGroupMedia.ts) — scrapes group photo and video tabs
-- [`src/pages/api/media.ts`](src/pages/api/media.ts) — JSON endpoint with 6-hour cache (supports `?limit=N`, max 50)
+- [`src/pages/api/media.ts`](src/pages/api/media.ts) — JSON endpoint with 6-hour cache (supports `?limit=N`, max 50); cron target
 - [`src/pages/api/media/image.ts`](src/pages/api/media/image.ts) — proxies Facebook thumbnails so they display reliably in the browser
-- [`api/media.ts`](api/media.ts) — Vercel serverless JSON endpoint (production cron target)
 - [`vercel.json`](vercel.json) — daily cron job hits `/api/media` to warm the cache (Hobby plan limit)
 
 The homepage preview is server-rendered from Facebook directly. Thumbnails are served through `/api/media/image` because Facebook CDN URLs expire quickly when linked directly.
@@ -81,7 +80,7 @@ The homepage preview is server-rendered from Facebook directly. Thumbnails are s
 - `src/lib/` — server-side helpers (weather, Facebook events, Facebook media)
 - `src/components/` — shared layout pieces (header, footer, hero, weather, media)
 - `src/styles/global.css` — site styles
-- `api/` — Vercel serverless functions
+- `src/pages/api/` — JSON API endpoints (events, media, weather)
 - `public/images/` — logo and hero graphics
 - `archive/` — original Wix site HTML (reference only)
 

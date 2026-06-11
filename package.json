@@ -16,8 +16,5 @@
     "astro": "^6.4.4",
     "axios": "^1.17.0",
     "facebook-event-scraper": "^0.2.7"
-  },
-  "devDependencies": {
-    "@vercel/node": "^5.8.11"
   }
 }
