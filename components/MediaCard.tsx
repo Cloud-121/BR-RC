@@ -4,7 +4,7 @@ import { cn } from '@/lib/cn';
 interface MediaCardProps {
   item: ClubMediaItem;
   hidden?: boolean;
-  onVideoClick?: (item: ClubMediaItem) => void;
+  onOpen?: (item: ClubMediaItem) => void;
 }
 
 function MediaThumbnail({ item, label }: { item: ClubMediaItem; label: string }) {
@@ -34,23 +34,24 @@ function MediaThumbnail({ item, label }: { item: ClubMediaItem; label: string })
   );
 }
 
-export default function MediaCard({ item, hidden = false, onVideoClick }: MediaCardProps) {
+export default function MediaCard({ item, hidden = false, onOpen }: MediaCardProps) {
+  const isVideo = item.type === 'video';
   const label =
     item.caption ??
-    (item.type === 'video' ? 'Video from BRRCC Facebook group' : 'Photo from BRRCC Facebook group');
+    (isVideo ? 'Video from BRRCC Facebook group' : 'Photo from BRRCC Facebook group');
 
   const className = cn(
     'group relative block aspect-square overflow-hidden rounded-[var(--radius-default)] border border-border bg-white shadow-[var(--shadow-card)] no-underline',
     hidden && 'hidden',
   );
 
-  if (item.type === 'video' && onVideoClick) {
+  if (onOpen) {
     return (
       <button
         type="button"
-        onClick={() => onVideoClick(item)}
+        onClick={() => onOpen(item)}
         className={cn(className, 'w-full cursor-pointer p-0 text-left')}
-        aria-label={`Play video: ${label}`}
+        aria-label={isVideo ? `Play video: ${label}` : `View photo: ${label}`}
         data-type={item.type}
       >
         <MediaThumbnail item={item} label={label} />

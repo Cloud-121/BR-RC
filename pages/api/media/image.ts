@@ -1,5 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { FacebookMediaError, findMediaItem, type ClubMediaItem } from '@/lib/fetchGroupMedia';
+import {
+  FacebookMediaError,
+  findMediaItem,
+  upgradeImageResolution,
+  type ClubMediaItem,
+} from '@/lib/fetchGroupMedia';
 
 const IMAGE_HEADERS = {
   Referer: 'https://www.facebook.com/',
@@ -20,13 +25,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).send('Bad request');
   }
 
+  const size = Array.isArray(req.query.size) ? req.query.size[0] : req.query.size;
+
   try {
     const item = await findMediaItem(id, type);
     if (!item) {
       return res.status(404).send('Not found');
     }
 
-    const imageResponse = await fetch(item.thumbnailUrl, { headers: IMAGE_HEADERS });
+    const sourceUrl =
+      size === 'full' ? upgradeImageResolution(item.thumbnailUrl) : item.thumbnailUrl;
+    const imageResponse = await fetch(sourceUrl, { headers: IMAGE_HEADERS });
     if (!imageResponse.ok) {
       return res.status(502).send('Unable to load image');
     }

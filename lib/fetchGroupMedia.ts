@@ -207,6 +207,27 @@ export function getMediaThumbnailUrl(id: string, type: ClubMediaItem['type']): s
   return `/api/media/image?${params.toString()}`;
 }
 
+export function getMediaImageUrl(
+  id: string,
+  type: ClubMediaItem['type'],
+  size: 'thumb' | 'full' = 'thumb',
+): string {
+  const params = new URLSearchParams({ id, type });
+  if (size === 'full') params.set('size', 'full');
+  return `/api/media/image?${params.toString()}`;
+}
+
+/**
+ * Upgrade a Facebook CDN image URL to its largest available size.
+ * The `ctp` display-size param does not affect the URL signature, so it can be
+ * raised to the `cstp` max (e.g. mx720x960) to fetch a sharper image for free.
+ */
+export function upgradeImageResolution(url: string): string {
+  const max = url.match(/cstp=mx(\d+)x(\d+)/);
+  if (!max) return url;
+  return url.replace(/ctp=s\d+x\d+/, `ctp=s${max[1]}x${max[2]}`);
+}
+
 export async function fetchGroupMedia(options: FetchGroupMediaOptions = {}): Promise<ClubMediaItem[]> {
   const limit = Math.min(Math.max(options.limit ?? DEFAULT_LIMIT, 1), MAX_LIMIT);
 

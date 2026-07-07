@@ -1,19 +1,19 @@
 import { useEffect, useId, useRef, useState } from 'react';
-import type { ClubMediaItem } from '@/lib/fetchGroupMedia';
+import { getMediaImageUrl, type ClubMediaItem } from '@/lib/fetchGroupMedia';
 import { getMediaVideoUrl } from '@/lib/fetchVideoSource';
 
-interface VideoEmbedModalProps {
-  video: ClubMediaItem | null;
+interface MediaModalProps {
+  item: ClubMediaItem | null;
   onClose: () => void;
 }
 
-export default function VideoEmbedModal({ video, onClose }: VideoEmbedModalProps) {
+export default function MediaModal({ item, onClose }: MediaModalProps) {
   const titleId = useId();
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const [loadState, setLoadState] = useState<'loading' | 'ready' | 'error'>('loading');
 
   useEffect(() => {
-    if (!video) return;
+    if (!item) return;
 
     setLoadState('loading');
     const previousOverflow = document.body.style.overflow;
@@ -29,12 +29,16 @@ export default function VideoEmbedModal({ video, onClose }: VideoEmbedModalProps
       document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [video, onClose]);
+  }, [item, onClose]);
 
-  if (!video) return null;
+  if (!item) return null;
 
-  const label = video.caption ?? 'Video from BRRCC Facebook group';
-  const videoUrl = getMediaVideoUrl(video.id);
+  const isVideo = item.type === 'video';
+  const label =
+    item.caption ??
+    (isVideo ? 'Video from BRRCC Facebook group' : 'Photo from BRRCC Facebook group');
+  const videoUrl = getMediaVideoUrl(item.id);
+  const imageUrl = getMediaImageUrl(item.id, item.type, 'full');
 
   return (
     <div
@@ -63,42 +67,60 @@ export default function VideoEmbedModal({ video, onClose }: VideoEmbedModalProps
           </button>
         </div>
 
-        <div className="relative aspect-video overflow-hidden rounded-[var(--radius-default)] bg-black">
+        <div className="relative flex max-h-[70vh] min-h-[240px] items-center justify-center overflow-hidden rounded-[var(--radius-default)] bg-black">
           {loadState === 'loading' && (
             <p className="absolute inset-0 flex items-center justify-center text-sm text-white/80">
-              Loading video…
+              {isVideo ? 'Loading video…' : 'Loading photo…'}
             </p>
           )}
           {loadState === 'error' && (
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-6 text-center text-sm text-white/90">
-              <p className="m-0">This video could not be played here.</p>
+              <p className="m-0">
+                This {isVideo ? 'video' : 'photo'} could not be {isVideo ? 'played' : 'shown'} here.
+              </p>
               <a
-                href={video.postUrl}
+                href={item.postUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-semibold text-cream underline underline-offset-4 hover:text-white"
               >
-                Watch on Facebook
+                {isVideo ? 'Watch on Facebook' : 'View on Facebook'}
               </a>
             </div>
           )}
-          <video
-            key={video.id}
-            src={videoUrl}
-            controls
-            autoPlay
-            playsInline
-            className={loadState === 'error' ? 'hidden' : 'absolute inset-0 h-full w-full bg-black'}
-            onLoadedData={() => setLoadState('ready')}
-            onError={() => setLoadState('error')}
-          >
-            Your browser does not support embedded video playback.
-          </video>
+
+          {isVideo ? (
+            <video
+              key={item.id}
+              src={videoUrl}
+              controls
+              autoPlay
+              playsInline
+              className={loadState === 'error' ? 'hidden' : 'h-full max-h-[70vh] w-full bg-black'}
+              onLoadedData={() => setLoadState('ready')}
+              onError={() => setLoadState('error')}
+            >
+              Your browser does not support embedded video playback.
+            </video>
+          ) : (
+            <img
+              key={item.id}
+              src={imageUrl}
+              alt={label}
+              className={
+                loadState === 'error'
+                  ? 'hidden'
+                  : 'max-h-[70vh] w-auto max-w-full object-contain'
+              }
+              onLoad={() => setLoadState('ready')}
+              onError={() => setLoadState('error')}
+            />
+          )}
         </div>
 
         <p className="mb-0 mt-3 text-sm text-text-muted">
-          Videos are streamed from Facebook.{' '}
-          <a href={video.postUrl} target="_blank" rel="noopener noreferrer">
+          {isVideo ? 'Videos are streamed from Facebook.' : 'Photos are shared in our Facebook group.'}{' '}
+          <a href={item.postUrl} target="_blank" rel="noopener noreferrer">
             Open on Facebook
           </a>{' '}
           for comments and sharing.
