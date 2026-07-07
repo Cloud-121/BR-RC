@@ -33,7 +33,13 @@ export default function KissnerField({ weather, weatherError }: KissnerFieldProp
       title="Kissner Field"
       description="Kissner Field — home of the Baton Rouge RC Club in Port Allen, Louisiana. Grass runway, covered shelter, and AMA chartered flying site."
     >
-      <HeroStrip headline="Kissner Field" showButton={false} compact />
+      <HeroStrip
+        headline="Kissner Field"
+        showButton={false}
+        compact
+        imageSrc="/images/second.jpg"
+        imagePositionClass="hero-bg--kissner"
+      />
 
       <main className="mx-auto max-w-content px-5 py-10 pb-14 max-md:px-4 max-md:py-8">
         <div className="rounded-[var(--radius-default)] border border-border bg-white p-8 shadow-[var(--shadow-card)] max-md:p-6">

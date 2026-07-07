@@ -37,7 +37,7 @@ export default function Events({ events, loadError }: EventsProps) {
       title="Events"
       description="Upcoming events at Baton Rouge RC Club — fly-ins and competitions at Kissner Field."
     >
-      <HeroStrip headline="Events" showButton={false} compact />
+      <HeroStrip headline="Events" showButton={false} compact imageSrc="/images/event.jpg" />
 
       <main className="mx-auto max-w-content px-5 py-10 pb-14 max-md:px-4 max-md:py-8">
         <div className="rounded-[var(--radius-default)] border border-border bg-white p-8 shadow-[var(--shadow-card)] max-md:p-6">

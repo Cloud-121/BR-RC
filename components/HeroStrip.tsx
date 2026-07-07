@@ -8,6 +8,8 @@ interface HeroStripProps {
   buttonHref?: string;
   buttonText?: string;
   compact?: boolean;
+  imageSrc?: string;
+  imagePositionClass?: string;
 }
 
 export default function HeroStrip({
@@ -17,9 +19,14 @@ export default function HeroStrip({
   buttonHref = '/about',
   buttonText = 'Learn About the Club',
   compact = false,
+  imageSrc,
+  imagePositionClass,
 }: HeroStripProps) {
   return (
-    <section className={cn('hero-bg', compact && 'hero-bg--compact')}>
+    <section
+      className={cn('hero-bg', compact && 'hero-bg--compact', imagePositionClass)}
+      style={imageSrc ? { backgroundImage: `url('${imageSrc}')` } : undefined}
+    >
       <div
         className={cn(
           'relative mx-auto w-full max-w-content px-5',

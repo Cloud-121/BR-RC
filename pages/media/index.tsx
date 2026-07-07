@@ -36,7 +36,7 @@ export default function MediaPage({ media, loadError }: MediaPageProps) {
       title="Media"
       description="Photos and videos from the Baton Rouge RC Club — fly days, events, and life at Kissner Field."
     >
-      <HeroStrip headline="Media" showButton={false} compact />
+      <HeroStrip headline="Media" showButton={false} compact imageSrc="/images/media.jpg" />
 
       <main className="mx-auto max-w-content px-5 py-10 pb-14 max-md:px-4 max-md:py-8">
         <div className="rounded-[var(--radius-default)] border border-border bg-white p-8 shadow-[var(--shadow-card)] max-md:p-6">

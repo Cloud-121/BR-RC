@@ -10,7 +10,7 @@ export default function About() {
       description="About the Baton Rouge Radio Control Club — AMA chartered club with nearly 40 years at Kissner Field."
     >
       <AboutConsoleEasterEgg />
-      <HeroStrip headline="About Us" showButton={false} compact />
+      <HeroStrip headline="About Us" showButton={false} compact imageSrc="/images/hero-strip.jpg" />
 
       <main className="mx-auto max-w-content px-5 py-10 pb-14 max-md:px-4 max-md:py-8">
         <div className="rounded-[var(--radius-default)] border border-border bg-white p-8 shadow-[var(--shadow-card)] max-md:p-6">

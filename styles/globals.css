@@ -108,6 +108,12 @@
     );
   }
 
+  @media (min-width: 768px) {
+    .hero-bg--kissner {
+      background-position: center 28%;
+    }
+  }
+
   @media (max-width: 768px) {
     .hero-bg {
       @apply min-h-[280px];

@@ -57,12 +57,10 @@ export default function Home({ weather, weatherError, mediaPreview, mediaError }
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           <InfoCard title="Kissner Field" href="/kissner-field">
-            Situated in West Baton Rouge Parish, Kissner Field is one of the largest dedicated RC
-            fields in the South — grass runways, covered shelter, and room for everyone.
+            Situated in West Baton Rouge Parish, Grass runways, and covered battery charging.
           </InfoCard>
           <InfoCard title="Join the Club" href="/about">
-            Meetings are the 1st Tuesday of each month at 6:30 PM. The public is welcome — come to a
-            meeting to learn about membership.
+            Meetings are the 1st Tuesday of each month at 6:30 PM, The public is welcome.
           </InfoCard>
         </div>
 
