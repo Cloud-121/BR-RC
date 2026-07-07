@@ -38,7 +38,7 @@ export default function MediaPreview({ media = [], error = null }: MediaPreviewP
           .
         </p>
       ) : (
-        <MediaGrid media={media} showFilters={false} />
+        <MediaGrid media={media} />
       )}
     </section>
   );

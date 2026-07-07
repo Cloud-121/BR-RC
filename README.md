@@ -84,3 +84,18 @@ The homepage preview is server-rendered from Facebook directly. Thumbnails are s
 ## Updating content
 
 Page copy lives in the `.tsx` files under `pages/`. Edit those files and redeploy. Event listings on `/events`, media on `/media`, and weather on Home/Kissner Field update automatically from their data sources.
+
+## Security notes
+
+`npm audit fix` resolves what it can without breaking changes. As of the last review:
+
+| Package | Severity | Status |
+|---------|----------|--------|
+| `form-data` (via `facebook-event-scraper`) | high | Fixed by `npm audit fix` |
+| `postcss` (bundled inside `next`) | moderate | No safe fix yet — requires a future Next.js release; do not run `npm audit fix --force` (it downgrades Next.js) |
+
+Re-run `npm audit` after dependency updates. To debug Facebook events scraping locally: `npx tsx scripts/debug-events.ts`.
+
+## Future improvements
+
+**Image optimization (`next/image`):** Not migrated yet. The logo (`Header.tsx`) is a good candidate for `next/image`. Media thumbnails (`MediaCard.tsx`) load through `/api/media/image` — decide whether to use `next/image` with `unoptimized` for proxied images or keep plain `<img>` tags to avoid Vercel image optimization quota usage.

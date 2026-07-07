@@ -4,6 +4,7 @@ import HeroStrip from '@/components/HeroStrip';
 import FieldWeather from '@/components/FieldWeather';
 import { fetchFieldWeather, type FieldWeather as FieldWeatherData } from '@/lib/fetchFieldWeather';
 import { FIELD_GOOGLE_MAPS_URL } from '@/lib/fieldLocation';
+import { serializeProps } from '@/lib/serializeProps';
 
 interface KissnerFieldProps {
   weather: FieldWeatherData | null;
@@ -23,7 +24,7 @@ export const getServerSideProps: GetServerSideProps<KissnerFieldProps> = async (
         : 'Unable to load current field weather right now.';
   }
 
-  return { props: { weather, weatherError } };
+  return { props: serializeProps({ weather, weatherError }) };
 };
 
 export default function KissnerField({ weather, weatherError }: KissnerFieldProps) {

@@ -1,7 +1,7 @@
 import type { GetServerSideProps } from 'next';
 import Layout from '@/components/Layout';
 import HeroStrip from '@/components/HeroStrip';
-import MediaGrid from '@/components/MediaGrid';
+import { FilterableMediaGrid } from '@/components/MediaGrid';
 import { fetchGroupMedia, type ClubMediaItem } from '@/lib/fetchGroupMedia';
 import { serializeProps } from '@/lib/serializeProps';
 
@@ -66,7 +66,7 @@ export default function MediaPage({ media, loadError }: MediaPageProps) {
           </div>
         ) : (
           <div className="mt-8">
-            <MediaGrid media={media} />
+            <FilterableMediaGrid media={media} />
           </div>
         )}
 

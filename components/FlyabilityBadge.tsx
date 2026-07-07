@@ -23,8 +23,17 @@ export default function FlyabilityBadge({ flyability, compact = false }: Flyabil
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           aria-hidden="true"
+          suppressHydrationWarning
         >
-          <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="2" />
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            suppressHydrationWarning
+          />
           <path
             d="M7.5 12.5 L10.5 15.5 L16.5 9"
             fill="none"
@@ -32,6 +41,7 @@ export default function FlyabilityBadge({ flyability, compact = false }: Flyabil
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
+            suppressHydrationWarning
           />
         </svg>
       ) : (
@@ -40,10 +50,25 @@ export default function FlyabilityBadge({ flyability, compact = false }: Flyabil
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           aria-hidden="true"
+          suppressHydrationWarning
         >
-          <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="2" />
-          <path d="M12 7 V13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-          <circle cx="12" cy="16.5" r="1.25" fill="currentColor" />
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            suppressHydrationWarning
+          />
+          <path
+            d="M12 7 V13"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            suppressHydrationWarning
+          />
+          <circle cx="12" cy="16.5" r="1.25" fill="currentColor" suppressHydrationWarning />
         </svg>
       )}
       <span>{isGood ? 'Good to fly' : 'Not so great to fly'}</span>

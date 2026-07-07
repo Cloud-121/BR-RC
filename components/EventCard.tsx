@@ -1,4 +1,5 @@
 import type { ClubEvent } from '@/lib/fetchGroupEvents';
+import { formatEventDate } from '@/lib/formatEventDate';
 
 interface EventCardProps {
   event: ClubEvent;
@@ -17,7 +18,7 @@ export default function EventCard({ event }: EventCardProps) {
           {event.title}
         </a>
       </h3>
-      <p className="mb-3 text-[0.95rem] font-bold text-rust">{event.startTime}</p>
+      <p className="mb-3 text-[0.95rem] font-bold text-rust">{formatEventDate(event.startTime)}</p>
       {event.location && <p>{event.location}</p>}
       {event.description && <p>{event.description}</p>}
       <a

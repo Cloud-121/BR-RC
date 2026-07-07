@@ -1,20 +1,50 @@
 import { useState } from 'react';
 import type { ClubMediaItem } from '@/lib/fetchGroupMedia';
 import MediaCard from './MediaCard';
+import VideoEmbedModal from './VideoEmbedModal';
 import { cn } from '@/lib/cn';
 
 type Filter = 'all' | 'photo' | 'video';
 
-interface MediaGridProps {
-  media: ClubMediaItem[];
-  showFilters?: boolean;
+function useVideoPlayer() {
+  const [selectedVideo, setSelectedVideo] = useState<ClubMediaItem | null>(null);
+
+  return {
+    selectedVideo,
+    openVideo: setSelectedVideo,
+    closeVideo: () => setSelectedVideo(null),
+  };
 }
 
-export default function MediaGrid({ media, showFilters = true }: MediaGridProps) {
+interface MediaGridProps {
+  media: ClubMediaItem[];
+}
+
+export default function MediaGrid({ media }: MediaGridProps) {
+  const { selectedVideo, openVideo, closeVideo } = useVideoPlayer();
+
+  return (
+    <>
+      <div className="mt-5 grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-4 md:grid-cols-[repeat(auto-fill,minmax(200px,1fr))]">
+        {media.map((item) => (
+          <MediaCard key={item.id} item={item} onVideoClick={openVideo} />
+        ))}
+      </div>
+      <VideoEmbedModal video={selectedVideo} onClose={closeVideo} />
+    </>
+  );
+}
+
+interface FilterableMediaGridProps {
+  media: ClubMediaItem[];
+}
+
+export function FilterableMediaGrid({ media }: FilterableMediaGridProps) {
   const hasPhotos = media.some((item) => item.type === 'photo');
   const hasVideos = media.some((item) => item.type === 'video');
-  const showFilterBar = showFilters && hasPhotos && hasVideos;
+  const showFilterBar = hasPhotos && hasVideos;
   const [filter, setFilter] = useState<Filter>('all');
+  const { selectedVideo, openVideo, closeVideo } = useVideoPlayer();
 
   return (
     <>
@@ -46,9 +76,11 @@ export default function MediaGrid({ media, showFilters = true }: MediaGridProps)
             key={item.id}
             item={item}
             hidden={filter !== 'all' && item.type !== filter}
+            onVideoClick={openVideo}
           />
         ))}
       </div>
+      <VideoEmbedModal video={selectedVideo} onClose={closeVideo} />
     </>
   );
 }
