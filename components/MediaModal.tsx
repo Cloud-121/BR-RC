@@ -42,7 +42,7 @@ export default function MediaModal({ item, onClose }: MediaModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-3 max-md:p-2"
       onClick={onClose}
       role="presentation"
     >
@@ -53,8 +53,8 @@ export default function MediaModal({ item, onClose }: MediaModalProps) {
         aria-labelledby={titleId}
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="mb-3 flex items-start justify-between gap-4">
-          <h2 id={titleId} className="mb-0 text-lg text-green">
+        <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+          <h2 id={titleId} className="mb-0 text-base text-green sm:text-lg">
             {label}
           </h2>
           <button
@@ -67,7 +67,7 @@ export default function MediaModal({ item, onClose }: MediaModalProps) {
           </button>
         </div>
 
-        <div className="relative flex max-h-[70vh] min-h-[240px] items-center justify-center overflow-hidden rounded-[var(--radius-default)] bg-black">
+        <div className="relative flex max-h-[65vh] min-h-[240px] items-center justify-center overflow-hidden rounded-[var(--radius-default)] bg-black max-md:max-h-[60vh]">
           {loadState === 'loading' && (
             <p className="absolute inset-0 flex items-center justify-center text-sm text-white/80">
               {isVideo ? 'Loading video…' : 'Loading photo…'}
@@ -96,7 +96,11 @@ export default function MediaModal({ item, onClose }: MediaModalProps) {
               controls
               autoPlay
               playsInline
-              className={loadState === 'error' ? 'hidden' : 'h-full max-h-[70vh] w-full bg-black'}
+              className={
+                loadState === 'error'
+                  ? 'hidden'
+                  : 'h-full max-h-[65vh] w-full bg-black max-md:max-h-[60vh]'
+              }
               onLoadedData={() => setLoadState('ready')}
               onError={() => setLoadState('error')}
             >
@@ -110,7 +114,7 @@ export default function MediaModal({ item, onClose }: MediaModalProps) {
               className={
                 loadState === 'error'
                   ? 'hidden'
-                  : 'max-h-[70vh] w-auto max-w-full object-contain'
+                  : 'max-h-[65vh] w-auto max-w-full object-contain max-md:max-h-[60vh]'
               }
               onLoad={() => setLoadState('ready')}
               onError={() => setLoadState('error')}

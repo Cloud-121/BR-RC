@@ -2,6 +2,7 @@ import type { GetServerSideProps } from 'next';
 import Layout from '@/components/Layout';
 import HeroStrip from '@/components/HeroStrip';
 import { FilterableMediaGrid } from '@/components/MediaGrid';
+import CtaBanner from '@/components/CtaBanner';
 import { fetchGroupMedia, type ClubMediaItem } from '@/lib/fetchGroupMedia';
 import { serializeProps } from '@/lib/serializeProps';
 
@@ -37,11 +38,11 @@ export default function MediaPage({ media, loadError }: MediaPageProps) {
     >
       <HeroStrip headline="Media" showButton={false} compact />
 
-      <main className="mx-auto max-w-content px-5 py-10 pb-14">
+      <main className="mx-auto max-w-content px-5 py-10 pb-14 max-md:px-4 max-md:py-8">
         <div className="rounded-[var(--radius-default)] border border-border bg-white p-8 shadow-[var(--shadow-card)] max-md:p-6">
           <p>
-            Recent photos and videos shared by club members in our Facebook group — fly days at Kissner
-            Field, events, and more.
+            Recent photos and videos shared by club members in our Facebook group, fly days at Kissner
+            Field and events
           </p>
         </div>
 
@@ -71,20 +72,18 @@ export default function MediaPage({ media, loadError }: MediaPageProps) {
         )}
 
         {!loadError && media.length > 0 && (
-          <div className="mt-10 rounded-[var(--radius-default)] bg-green px-8 py-6 text-center text-white">
-            <p className="m-0 text-[1.05rem]">
-              More photos and videos on{' '}
-              <a
-                href={FACEBOOK_GROUP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-bold text-cream underline underline-offset-4 hover:text-white"
-              >
-                our Facebook group
-              </a>
-              .
-            </p>
-          </div>
+          <CtaBanner>
+            More photos and videos on{' '}
+            <a
+              href={FACEBOOK_GROUP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-bold text-cream underline underline-offset-4 hover:text-white"
+            >
+              our Facebook group
+            </a>
+            .
+          </CtaBanner>
         )}
       </main>
     </Layout>

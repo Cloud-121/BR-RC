@@ -25,7 +25,7 @@ export default function MediaGrid({ media }: MediaGridProps) {
 
   return (
     <>
-      <div className="mt-5 grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-4 md:grid-cols-[repeat(auto-fill,minmax(200px,1fr))]">
+      <div className="mt-5 grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-4 md:grid-cols-[repeat(auto-fill,minmax(200px,1fr))]">
         {media.map((item) => (
           <MediaCard key={item.id} item={item} onOpen={openItem} />
         ))}
@@ -70,7 +70,7 @@ export function FilterableMediaGrid({ media }: FilterableMediaGridProps) {
         </div>
       )}
 
-      <div className="mt-5 grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-4 md:grid-cols-[repeat(auto-fill,minmax(200px,1fr))]">
+      <div className="mt-5 grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-4 md:grid-cols-[repeat(auto-fill,minmax(200px,1fr))]">
         {media.map((item) => (
           <MediaCard
             key={item.id}

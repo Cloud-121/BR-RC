@@ -14,7 +14,8 @@ export default function FlyabilityBadge({ flyability, compact = false }: Flyabil
       className={cn(
         'flex items-center gap-2 rounded-[var(--radius-default)] px-3.5 py-2.5 text-[0.95rem] font-semibold',
         isGood ? 'bg-green-pale text-green-light' : 'bg-[#f8ebe3] text-rust',
-        compact && 'mb-0 max-w-[9.5rem] shrink-0 text-center text-[0.85rem]',
+        compact &&
+          'mb-0 w-full justify-center text-center text-[0.85rem] sm:w-auto sm:max-w-[9.5rem] sm:shrink-0',
       )}
     >
       {isGood ? (

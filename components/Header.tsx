@@ -24,9 +24,6 @@ export default function Header() {
 
   return (
     <header className="bg-green text-white shadow-[var(--shadow-card)]">
-      <p className="bg-black/15 px-4 py-1.5 text-center text-[0.8rem] uppercase tracking-wide max-md:text-[0.7rem]">
-        AMA Chartered · Meetings 1st Tuesday, 6:30 PM · Kissner Field, Port Allen
-      </p>
       <div className="mx-auto flex max-w-content flex-wrap items-center justify-between gap-6 px-5 py-4 max-md:px-4 max-md:py-3.5">
         <Link href="/" className="flex items-center gap-4 text-white no-underline hover:text-white">
           <img
@@ -43,7 +40,7 @@ export default function Header() {
         <nav className="flex w-full flex-col items-start md:w-auto md:flex-row md:items-center" aria-label="Main">
           <button
             type="button"
-            className="cursor-pointer rounded-md border border-white/40 px-3 py-2 text-sm font-semibold text-white md:hidden"
+            className="min-h-11 cursor-pointer rounded-md border border-white/40 px-3 py-2 text-sm font-semibold text-white md:hidden"
             onClick={() => setMenuOpen((open) => !open)}
             aria-expanded={menuOpen}
             aria-controls="main-nav"

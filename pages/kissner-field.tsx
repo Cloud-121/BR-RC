@@ -35,7 +35,7 @@ export default function KissnerField({ weather, weatherError }: KissnerFieldProp
     >
       <HeroStrip headline="Kissner Field" showButton={false} compact />
 
-      <main className="mx-auto max-w-content px-5 py-10 pb-14">
+      <main className="mx-auto max-w-content px-5 py-10 pb-14 max-md:px-4 max-md:py-8">
         <div className="rounded-[var(--radius-default)] border border-border bg-white p-8 shadow-[var(--shadow-card)] max-md:p-6">
           <section className="mb-8 last:mb-0">
             <h2>About the Field</h2>
@@ -57,19 +57,11 @@ export default function KissnerField({ weather, weatherError }: KissnerFieldProp
                 <strong className="font-semibold text-green">Address</strong>
                 <span>8940 Ronald Reagan Highway, Port Allen, LA 70767</span>
               </li>
-              <li className="grid gap-1 border-b border-cream-dark py-3 md:grid-cols-[9rem_1fr] md:gap-3">
+              <li className="grid gap-1 py-3 md:grid-cols-[9rem_1fr] md:gap-3">
                 <strong className="font-semibold text-green">Directions</strong>
                 <a href={FIELD_GOOGLE_MAPS_URL} target="_blank" rel="noopener noreferrer">
                   View on Google Maps
                 </a>
-              </li>
-              <li className="grid gap-1 border-b border-cream-dark py-3 md:grid-cols-[9rem_1fr] md:gap-3">
-                <strong className="font-semibold text-green">Runway</strong>
-                <span>700&apos; grass runway</span>
-              </li>
-              <li className="grid gap-1 py-3 md:grid-cols-[9rem_1fr] md:gap-3">
-                <strong className="font-semibold text-green">Altitude limit</strong>
-                <span>400 feet</span>
               </li>
             </ul>
           </section>

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Layout from '@/components/Layout';
 import HeroStrip from '@/components/HeroStrip';
 import MeetingsNotice from '@/components/MeetingsNotice';
+import CtaBanner from '@/components/CtaBanner';
 import { FIELD_GOOGLE_MAPS_URL } from '@/lib/fieldLocation';
 
 export default function Contact() {
@@ -12,7 +13,7 @@ export default function Contact() {
     >
       <HeroStrip headline="Contact Us" showButton={false} compact />
 
-      <main className="mx-auto max-w-content px-5 py-10 pb-14">
+      <main className="mx-auto max-w-content px-5 py-10 pb-14 max-md:px-4 max-md:py-8">
         <div className="rounded-[var(--radius-default)] border border-border bg-white p-8 shadow-[var(--shadow-card)] max-md:p-6">
           <section className="mb-8 last:mb-0">
             <h2>Club Officers</h2>
@@ -63,20 +64,18 @@ export default function Contact() {
           <MeetingsNotice compact />
         </div>
 
-        <div className="mt-10 rounded-[var(--radius-default)] bg-green px-8 py-6 text-center text-white">
-          <p className="m-0 text-[1.05rem]">
-            The best way to connect with members and get quick answers —{' '}
-            <a
-              href="https://www.facebook.com/groups/BRRCC"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-bold text-cream underline underline-offset-4 hover:text-white"
-            >
-              join our Facebook group
-            </a>
-            .
-          </p>
-        </div>
+        <CtaBanner>
+          The best way to connect with members and get quick answers —{' '}
+          <a
+            href="https://www.facebook.com/groups/BRRCC"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-bold text-cream underline underline-offset-4 hover:text-white"
+          >
+            join our Facebook group
+          </a>
+          .
+        </CtaBanner>
       </main>
     </Layout>
   );

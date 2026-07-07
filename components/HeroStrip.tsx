@@ -23,19 +23,21 @@ export default function HeroStrip({
       <div
         className={cn(
           'relative mx-auto w-full max-w-content px-5',
-          compact ? 'py-10' : 'py-14 max-md:px-4 max-md:py-10',
+          compact ? 'py-10 max-md:px-4' : 'py-14 max-md:px-4 max-md:py-10',
         )}
       >
         <h1
           className={cn(
             'mb-3 text-white',
-            compact ? 'max-w-none text-[clamp(1.75rem,4vw,2.25rem)]' : 'max-w-[16ch]',
+            compact
+              ? 'max-w-none text-[clamp(1.75rem,4vw,2.25rem)]'
+              : 'max-w-[16ch] max-md:max-w-[20ch]',
           )}
         >
           {headline}
         </h1>
         {subtitle && (
-          <p className="mb-6 max-w-xl text-[1.1rem] text-white/90">{subtitle}</p>
+          <p className="mb-6 max-w-xl text-[1.05rem] text-white/90 max-md:text-base">{subtitle}</p>
         )}
         {showButton && (
           <Link

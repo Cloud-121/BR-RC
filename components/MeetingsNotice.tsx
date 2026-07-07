@@ -12,7 +12,7 @@ export default function MeetingsNotice({ compact = false }: MeetingsNoticeProps)
   return (
     <aside
       className={cn(
-        'mb-6 rounded-[var(--radius-default)] border border-border bg-white p-6 shadow-[var(--shadow-card)] border-l-4 border-l-green-light',
+        'mb-6 rounded-[var(--radius-default)] border border-border bg-white p-6 shadow-[var(--shadow-card)] border-l-4 border-l-green-light max-md:p-4',
         compact && '[&_p:last-child]:mb-0',
       )}
     >

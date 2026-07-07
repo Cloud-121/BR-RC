@@ -112,5 +112,13 @@
     .hero-bg {
       @apply min-h-[280px];
     }
+
+    h2 {
+      font-size: 1.4rem;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+    }
   }
 }

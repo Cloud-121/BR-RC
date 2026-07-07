@@ -40,12 +40,16 @@ export default function FieldWeatherPanel({
             Field weather unavailable. <Link href="/kissner-field">View Kissner Field</Link>
           </p>
         ) : weather ? (
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="min-w-0 flex-1">
               <p className="mb-1 text-[0.95rem]">
-                <strong>{FIELD_NAME}:</strong> {weather.temperatureF}°F · Wind{' '}
-                {weather.windSpeedMph} mph {weather.windDirection}
-                {weather.windGustMph != null && ` · Gusts ${weather.windGustMph} mph`} ·{' '}
+                <strong>{FIELD_NAME}</strong>
+              </p>
+              <p className="mb-1 text-[0.95rem]">
+                {weather.temperatureF}°F · Wind {weather.windSpeedMph} mph {weather.windDirection}
+                {weather.windGustMph != null && ` · Gusts ${weather.windGustMph} mph`}
+              </p>
+              <p className="mb-1 text-[0.95rem]">
                 {weather.conditions} · Rain 24h: {formatPrecip(weather.rainfall24hIn)}
               </p>
               <p className="m-0 text-sm">
@@ -93,9 +97,6 @@ export default function FieldWeatherPanel({
           </div>
           <p className="mb-0 mt-4 text-sm text-text-muted">
             Last updated {formatObservedAt(weather.observedAt)} (Central Time)
-          </p>
-          <p className="mb-0 mt-2 text-sm italic text-text-muted">
-            Conditions at the field can differ from this reading. Check the windsock before flying.
           </p>
         </>
       ) : null}
