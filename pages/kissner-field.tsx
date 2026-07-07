@@ -37,7 +37,7 @@ export default function KissnerField({ weather, weatherError }: KissnerFieldProp
         headline="Kissner Field"
         showButton={false}
         compact
-        imageSrc="/images/second.jpg"
+        imageSrc="/images/landing.jpg"
         imagePositionClass="hero-bg--kissner"
       />
 

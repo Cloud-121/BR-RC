@@ -8,10 +8,10 @@ import { FIELD_GOOGLE_MAPS_URL } from '@/lib/fieldLocation';
 export default function Contact() {
   return (
     <Layout
-      title="Contact Us"
+      title="Contact"
       description="Contact the Baton Rouge RC Club — club officers, field location, and Facebook group."
     >
-      <HeroStrip headline="Contact Us" showButton={false} compact imageSrc="/images/contact.jpg" />
+      <HeroStrip headline="Contact" showButton={false} compact imageSrc="/images/contact.jpg" />
 
       <main className="mx-auto max-w-content px-5 py-10 pb-14 max-md:px-4 max-md:py-8">
         <div className="rounded-[var(--radius-default)] border border-border bg-white p-8 shadow-[var(--shadow-card)] max-md:p-6">
