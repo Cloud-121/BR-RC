@@ -49,7 +49,7 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
 export default function Home({ weather, weatherError, mediaPreview, mediaError }: HomeProps) {
   return (
     <Layout title="Home">
-      <HeroStrip subtitle="AMA chartered club, Flying fixed wing, helicopters, EDF's, and more." />
+      <HeroStrip subtitle="AMA chartered club, Fixed wing, helicopters, EDF's, FPV, and more." />
 
       <main className="mx-auto max-w-wide px-5 py-10 pb-14 max-md:px-4 max-md:py-8 max-md:pb-10">
         <MeetingsNotice compact />

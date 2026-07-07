@@ -1,5 +1,6 @@
 import Layout from '@/components/Layout';
 import HeroStrip from '@/components/HeroStrip';
+import AboutConsoleEasterEgg from '@/components/AboutConsoleEasterEgg';
 import { MEETING_LIBRARY_GOOGLE_MAPS_URL, MEETING_LIBRARY_NAME } from '@/lib/fieldLocation';
 
 export default function About() {
@@ -8,6 +9,7 @@ export default function About() {
       title="About Us"
       description="About the Baton Rouge Radio Control Club — AMA chartered club with nearly 40 years at Kissner Field."
     >
+      <AboutConsoleEasterEgg />
       <HeroStrip headline="About Us" showButton={false} compact />
 
       <main className="mx-auto max-w-content px-5 py-10 pb-14 max-md:px-4 max-md:py-8">
