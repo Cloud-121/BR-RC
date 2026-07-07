@@ -1,12 +1,13 @@
 export default function Footer() {
-  const year = new Date().getFullYear();
-
   return (
     <footer className="mt-auto bg-footer px-5 py-8 text-white/75">
       <div className="mx-auto grid max-w-content grid-cols-1 items-center gap-6 md:grid-cols-[1fr_auto]">
         <div className="max-md:text-center">
           <p className="mb-1 font-heading text-base text-white">Baton Rouge Radio Control Club</p>
-          <p className="m-0 text-sm">&copy; {year} · Flying at Kissner Field since the 1980s</p>
+          <p className="m-0 text-sm">
+            &copy; <span suppressHydrationWarning>{new Date().getFullYear()}</span> · Flying at
+            Kissner Field since the 1980s
+          </p>
         </div>
         <a
           href="https://www.facebook.com/groups/BRRCC"

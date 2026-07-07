@@ -1,4 +1,5 @@
 import { EventType, scrapeFbEventList, type ScrapeOptions } from 'facebook-event-scraper';
+import { isFutureEventDate } from './formatEventDate';
 
 export interface ClubEvent {
   id: string;
@@ -17,6 +18,9 @@ export class FacebookEventsError extends Error {
 }
 
 const DEFAULT_GROUP_EVENTS_URL = 'https://www.facebook.com/groups/BRRCC/events';
+const CACHE_TTL_MS = 6 * 60 * 60 * 1000;
+
+let eventsCache: { events: ClubEvent[]; expiresAt: number } | null = null;
 
 function getScrapeOptions(): ScrapeOptions | undefined {
   const proxyUrl = process.env.HTTP_PROXY;
@@ -52,7 +56,8 @@ function normalizeEvent(event: {
   isCanceled: boolean;
   isPast: boolean;
 }): ClubEvent | null {
-  if (event.isCanceled || event.isPast) return null;
+  if (event.isCanceled) return null;
+  if (event.isPast && !isFutureEventDate(event.date)) return null;
 
   return {
     id: event.id,
@@ -62,14 +67,30 @@ function normalizeEvent(event: {
   };
 }
 
-export async function fetchGroupEvents(): Promise<ClubEvent[]> {
+async function scrapeGroupEvents(): Promise<ClubEvent[]> {
   const url = getGroupEventsUrl();
+  const options = getScrapeOptions();
+  const rawEvents = await scrapeFbEventList(url, EventType.Upcoming, options);
 
+  return rawEvents
+    .map(normalizeEvent)
+    .filter((event): event is ClubEvent => event !== null);
+}
+
+async function getCachedEvents(): Promise<ClubEvent[]> {
+  const now = Date.now();
+  if (eventsCache && eventsCache.expiresAt > now) {
+    return eventsCache.events;
+  }
+
+  const events = await scrapeGroupEvents();
+  eventsCache = { events, expiresAt: now + CACHE_TTL_MS };
+  return events;
+}
+
+export async function fetchGroupEvents(): Promise<ClubEvent[]> {
   try {
-    const rawEvents = await scrapeFbEventList(url, EventType.Upcoming, getScrapeOptions());
-    return rawEvents
-      .map(normalizeEvent)
-      .filter((event): event is ClubEvent => event !== null);
+    return await getCachedEvents();
   } catch (error) {
     const message =
       error instanceof Error ? error.message : 'Unknown error while fetching Facebook events';

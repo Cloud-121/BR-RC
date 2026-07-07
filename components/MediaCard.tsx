@@ -4,32 +4,21 @@ import { cn } from '@/lib/cn';
 interface MediaCardProps {
   item: ClubMediaItem;
   hidden?: boolean;
+  onVideoClick?: (item: ClubMediaItem) => void;
 }
 
-export default function MediaCard({ item, hidden = false }: MediaCardProps) {
-  const label =
-    item.caption ??
-    (item.type === 'video' ? 'Video from BRRCC Facebook group' : 'Photo from BRRCC Facebook group');
+function MediaThumbnail({ item, label }: { item: ClubMediaItem; label: string }) {
   const thumbnailUrl = getMediaThumbnailUrl(item.id, item.type);
 
   return (
-    <a
-      href={item.postUrl}
-      className={cn(
-        'relative block aspect-square overflow-hidden rounded-[var(--radius-default)] border border-border bg-white shadow-[var(--shadow-card)] no-underline',
-        hidden && 'hidden',
-      )}
-      target="_blank"
-      rel="noopener noreferrer"
-      data-type={item.type}
-    >
+    <>
       <img
         src={thumbnailUrl}
         alt={label}
         loading="lazy"
         width={280}
         height={280}
-        className="h-full w-full object-cover transition-transform duration-200 hover:scale-[1.03]"
+        className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-[1.03]"
       />
       {item.type === 'video' && (
         <span
@@ -41,6 +30,43 @@ export default function MediaCard({ item, hidden = false }: MediaCardProps) {
           </svg>
         </span>
       )}
+    </>
+  );
+}
+
+export default function MediaCard({ item, hidden = false, onVideoClick }: MediaCardProps) {
+  const label =
+    item.caption ??
+    (item.type === 'video' ? 'Video from BRRCC Facebook group' : 'Photo from BRRCC Facebook group');
+
+  const className = cn(
+    'group relative block aspect-square overflow-hidden rounded-[var(--radius-default)] border border-border bg-white shadow-[var(--shadow-card)] no-underline',
+    hidden && 'hidden',
+  );
+
+  if (item.type === 'video' && onVideoClick) {
+    return (
+      <button
+        type="button"
+        onClick={() => onVideoClick(item)}
+        className={cn(className, 'w-full cursor-pointer p-0 text-left')}
+        aria-label={`Play video: ${label}`}
+        data-type={item.type}
+      >
+        <MediaThumbnail item={item} label={label} />
+      </button>
+    );
+  }
+
+  return (
+    <a
+      href={item.postUrl}
+      className={className}
+      target="_blank"
+      rel="noopener noreferrer"
+      data-type={item.type}
+    >
+      <MediaThumbnail item={item} label={label} />
     </a>
   );
 }

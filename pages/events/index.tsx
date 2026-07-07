@@ -7,6 +7,7 @@ import { fetchGroupEvents, type ClubEvent } from '@/lib/fetchGroupEvents';
 import { serializeProps } from '@/lib/serializeProps';
 
 const FACEBOOK_GROUP_URL = 'https://www.facebook.com/groups/BRRCC';
+const FACEBOOK_GROUP_EVENTS_URL = 'https://www.facebook.com/groups/BRRCC/events';
 
 interface EventsProps {
   events: ClubEvent[];
@@ -58,12 +59,16 @@ export default function Events({ events, loadError }: EventsProps) {
           </div>
         ) : events.length === 0 ? (
           <div className="mt-8 rounded-[var(--radius-default)] border border-border bg-white p-8 shadow-[var(--shadow-card)] max-md:p-6">
-            <p>No upcoming events posted yet.</p>
+            <p>No upcoming events are listed on Facebook right now.</p>
             <p>
-              <a href={FACEBOOK_GROUP_URL} target="_blank" rel="noopener noreferrer">
-                Check the BRRCC Facebook group
+              <a href={FACEBOOK_GROUP_EVENTS_URL} target="_blank" rel="noopener noreferrer">
+                View the BRRCC events page on Facebook
               </a>{' '}
-              for the latest announcements.
+              for the latest announcements, or check the main{' '}
+              <a href={FACEBOOK_GROUP_URL} target="_blank" rel="noopener noreferrer">
+                Facebook group
+              </a>
+              .
             </p>
           </div>
         ) : (
