@@ -1,18 +1,18 @@
 import { useState } from 'react';
 import type { ClubMediaItem } from '@/lib/fetchGroupMedia';
 import MediaCard from './MediaCard';
-import VideoEmbedModal from './VideoEmbedModal';
+import MediaModal from './MediaModal';
 import { cn } from '@/lib/cn';
 
 type Filter = 'all' | 'photo' | 'video';
 
-function useVideoPlayer() {
-  const [selectedVideo, setSelectedVideo] = useState<ClubMediaItem | null>(null);
+function useMediaModal() {
+  const [selectedItem, setSelectedItem] = useState<ClubMediaItem | null>(null);
 
   return {
-    selectedVideo,
-    openVideo: setSelectedVideo,
-    closeVideo: () => setSelectedVideo(null),
+    selectedItem,
+    openItem: setSelectedItem,
+    closeItem: () => setSelectedItem(null),
   };
 }
 
@@ -21,16 +21,16 @@ interface MediaGridProps {
 }
 
 export default function MediaGrid({ media }: MediaGridProps) {
-  const { selectedVideo, openVideo, closeVideo } = useVideoPlayer();
+  const { selectedItem, openItem, closeItem } = useMediaModal();
 
   return (
     <>
       <div className="mt-5 grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-4 md:grid-cols-[repeat(auto-fill,minmax(200px,1fr))]">
         {media.map((item) => (
-          <MediaCard key={item.id} item={item} onVideoClick={openVideo} />
+          <MediaCard key={item.id} item={item} onOpen={openItem} />
         ))}
       </div>
-      <VideoEmbedModal video={selectedVideo} onClose={closeVideo} />
+      <MediaModal item={selectedItem} onClose={closeItem} />
     </>
   );
 }
@@ -44,7 +44,7 @@ export function FilterableMediaGrid({ media }: FilterableMediaGridProps) {
   const hasVideos = media.some((item) => item.type === 'video');
   const showFilterBar = hasPhotos && hasVideos;
   const [filter, setFilter] = useState<Filter>('all');
-  const { selectedVideo, openVideo, closeVideo } = useVideoPlayer();
+  const { selectedItem, openItem, closeItem } = useMediaModal();
 
   return (
     <>
@@ -76,11 +76,11 @@ export function FilterableMediaGrid({ media }: FilterableMediaGridProps) {
             key={item.id}
             item={item}
             hidden={filter !== 'all' && item.type !== filter}
-            onVideoClick={openVideo}
+            onOpen={openItem}
           />
         ))}
       </div>
-      <VideoEmbedModal video={selectedVideo} onClose={closeVideo} />
+      <MediaModal item={selectedItem} onClose={closeItem} />
     </>
   );
 }
