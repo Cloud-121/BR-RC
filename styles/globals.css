@@ -1,0 +1,116 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-cream: #f6f3eb;
+  --color-cream-dark: #ebe6da;
+  --color-text: #2c3330;
+  --color-text-muted: #5a6560;
+  --color-green: #1e4d3a;
+  --color-green-light: #2d6b52;
+  --color-green-pale: #d8e8df;
+  --color-rust: #c45c2a;
+  --color-rust-dark: #9a4520;
+  --color-sky: #4a8fb8;
+  --color-border: #d4cfc4;
+  --color-footer: #152921;
+  --font-heading: var(--font-bitter), Georgia, serif;
+  --font-body: var(--font-open-sans), 'Segoe UI', sans-serif;
+  --max-width-content: 1040px;
+  --max-width-wide: 1100px;
+  --radius-default: 10px;
+  --shadow-card: 0 2px 12px rgba(30, 77, 58, 0.08);
+}
+
+@layer base {
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply m-0 min-h-screen flex flex-col bg-cream font-body text-text leading-relaxed;
+  }
+
+  img {
+    @apply block h-auto max-w-full;
+  }
+
+  a {
+    @apply text-green-light transition-colors duration-150;
+  }
+
+  a:hover {
+    @apply text-rust;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply m-0 mb-3 font-heading font-bold leading-tight;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 2.75rem);
+  }
+
+  h2 {
+    @apply text-[1.65rem] text-green;
+  }
+
+  h3 {
+    @apply text-[1.2rem] text-green;
+  }
+
+  p {
+    @apply mb-4 last:mb-0;
+  }
+
+  ul {
+    @apply mb-4 list-disc pl-5;
+  }
+
+  ul li {
+    @apply mb-1.5;
+  }
+}
+
+@layer components {
+  .hero-bg {
+    @apply relative flex min-h-[320px] items-center bg-green bg-cover bg-center;
+    background-image: url('/images/hero-banner.jpg');
+  }
+
+  .hero-bg::before {
+    content: '';
+    @apply absolute inset-0;
+    background: linear-gradient(
+      105deg,
+      rgba(30, 77, 58, 0.88) 0%,
+      rgba(30, 77, 58, 0.6) 35%,
+      rgba(30, 77, 58, 0.25) 65%,
+      rgba(30, 77, 58, 0.05) 100%
+    );
+  }
+
+  .hero-bg--compact {
+    @apply min-h-[220px];
+  }
+
+  .hero-bg--compact::before {
+    background: linear-gradient(
+      105deg,
+      rgba(30, 77, 58, 0.9) 0%,
+      rgba(30, 77, 58, 0.65) 50%,
+      rgba(30, 77, 58, 0.2) 100%
+    );
+  }
+
+  @media (max-width: 768px) {
+    .hero-bg {
+      @apply min-h-[280px];
+    }
+  }
+}

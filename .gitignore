@@ -1,8 +1,7 @@
 # build output
-dist/
+.next/
+out/
 .vercel/
-# generated types
-.astro/
 
 # dependencies
 node_modules/
@@ -13,10 +12,13 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-
 # environment variables
 .env
 .env.production
+.env*.local
+
+# typescript
+next-env.d.ts
 
 # macOS-specific files
 .DS_Store
