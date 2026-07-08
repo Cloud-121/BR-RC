@@ -80,13 +80,9 @@ export default function About() {
                 <strong className="font-semibold text-green">New members</strong>
                 <span>$140 first year</span>
               </li>
-              <li className="grid gap-1 border-b border-cream-dark py-3 md:grid-cols-[9rem_1fr] md:gap-3">
+              <li className="grid gap-1 py-3 md:grid-cols-[9rem_1fr] md:gap-3">
                 <strong className="font-semibold text-green">Renewals</strong>
                 <span>$125 per calendar year</span>
-              </li>
-              <li className="grid gap-1 py-3 md:grid-cols-[9rem_1fr] md:gap-3">
-                <strong className="font-semibold text-green">Late joiners</strong>
-                <span>Members who join after October 1 are paid through the following year</span>
               </li>
             </ul>
             <p>
