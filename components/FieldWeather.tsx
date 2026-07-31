@@ -1,8 +1,11 @@
 import Link from 'next/link';
 import type { FieldWeather } from '@/lib/fetchFieldWeather';
-import { assessFlyability } from '@/lib/flyability';
+import { assessFlyability, assessFlyabilityDetailed, getMetricStatus } from '@/lib/flyability';
 import { FIELD_NAME, FIELD_TIMEZONE } from '@/lib/fieldLocation';
 import FlyabilityBadge from './FlyabilityBadge';
+import HourlyForecast from './weather/HourlyForecast';
+import WeatherMetricTile from './weather/WeatherMetricTile';
+import WindCompass from './weather/WindCompass';
 import { cn } from '@/lib/cn';
 
 interface FieldWeatherProps {
@@ -31,6 +34,7 @@ export default function FieldWeatherPanel({
   compact = false,
 }: FieldWeatherProps) {
   const flyability = weather ? assessFlyability(weather) : null;
+  const flyabilityDetail = weather ? assessFlyabilityDetailed(weather) : null;
 
   if (compact) {
     return (
@@ -64,39 +68,82 @@ export default function FieldWeatherPanel({
   }
 
   return (
-    <aside className="mb-6 rounded-[var(--radius-default)] border border-border bg-white p-6 shadow-[var(--shadow-card)] border-l-4 border-l-sky">
-      <h2 className="mb-4 text-xl">Current Conditions at {FIELD_NAME}</h2>
+    <aside className="mx-auto mb-6 mt-6 max-w-content rounded-[var(--radius-default)] border border-border bg-white p-6 shadow-[var(--shadow-card)] border-l-4 border-l-sky max-md:mx-4 max-md:p-5">
+      <h2 className="mb-4 text-xl">Field Conditions at {FIELD_NAME}</h2>
       {error ? (
         <p>{error}</p>
-      ) : weather ? (
+      ) : weather && flyabilityDetail ? (
         <>
-          {flyability && <FlyabilityBadge flyability={flyability} />}
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-            {[
-              ['Temperature', `${weather.temperatureF}°F`],
-              ['Feels like', `${weather.feelsLikeF}°F`],
-              ['Wind', `${weather.windSpeedMph} mph ${weather.windDirection}`],
-              ['Gusts', weather.windGustMph != null ? `${weather.windGustMph} mph` : '—'],
-              ['Humidity', `${weather.humidity}%`],
-              ['Current hour', formatPrecip(weather.precipitationIn)],
-              ['Rainfall (24 hr)', formatPrecip(weather.rainfall24hIn)],
-            ].map(([label, value]) => (
-              <div key={label} className="flex flex-col gap-0.5">
-                <span className="text-xs font-semibold uppercase tracking-wide text-text-muted">
-                  {label}
-                </span>
-                <span className="text-[1.05rem] font-semibold text-green">{value}</span>
-              </div>
-            ))}
-            <div className="col-span-2 flex flex-col gap-0.5 sm:col-span-3">
-              <span className="text-xs font-semibold uppercase tracking-wide text-text-muted">
-                Conditions
-              </span>
-              <span className="text-[1.05rem] font-semibold text-green">{weather.conditions}</span>
+          <div
+            className={cn(
+              'mb-6 rounded-[var(--radius-default)] px-5 py-4',
+              flyabilityDetail.status === 'good'
+                ? 'bg-green-pale text-green-light'
+                : 'bg-[#f8ebe3] text-rust',
+            )}
+          >
+            <p className="mb-1 text-lg font-bold">
+              {flyabilityDetail.status === 'good' ? 'Good to fly' : 'Not so great to fly'}
+            </p>
+            {flyabilityDetail.reasons.length > 0 ? (
+              <ul className="m-0 list-disc pl-5 text-sm">
+                {flyabilityDetail.reasons.map((reason) => (
+                  <li key={reason}>{reason}</li>
+                ))}
+              </ul>
+            ) : (
+              <p className="m-0 text-sm">Conditions look favorable for flying right now.</p>
+            )}
+          </div>
+
+          <div className="grid gap-4 lg:grid-cols-[7rem_1fr] lg:items-center">
+            <WindCompass
+              directionDeg={weather.windDirectionDeg}
+              directionLabel={weather.windDirection}
+              className="justify-self-center"
+            />
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+              <WeatherMetricTile
+                label="Wind"
+                value={`${weather.windSpeedMph} mph`}
+                status={getMetricStatus('wind', weather)}
+              />
+              <WeatherMetricTile
+                label="Gusts"
+                value={weather.windGustMph != null ? `${weather.windGustMph} mph` : '—'}
+                status={getMetricStatus('gusts', weather)}
+              />
+              <WeatherMetricTile
+                label="Temperature"
+                value={`${weather.temperatureF}°F`}
+              />
+              <WeatherMetricTile
+                label="Conditions"
+                value={weather.conditions}
+                status={getMetricStatus('conditions', weather)}
+              />
+              <WeatherMetricTile
+                label="Precipitation"
+                value={formatPrecip(weather.precipitationIn)}
+                status={getMetricStatus('precip', weather)}
+              />
+              <WeatherMetricTile
+                label="Rainfall (24 hr)"
+                value={formatPrecip(weather.rainfall24hIn)}
+              />
             </div>
           </div>
+
+          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+            <WeatherMetricTile label="Feels like" value={`${weather.feelsLikeF}°F`} />
+            <WeatherMetricTile label="Humidity" value={`${weather.humidity}%`} />
+          </div>
+
+          <HourlyForecast hourly={weather.hourly} />
+
           <p className="mb-0 mt-4 text-sm text-text-muted">
-            Last updated {formatObservedAt(weather.observedAt)} (Central Time)
+            Last updated {formatObservedAt(weather.observedAt)} (Central Time). Field conditions can
+            differ from this reading.
           </p>
         </>
       ) : null}

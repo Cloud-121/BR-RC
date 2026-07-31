@@ -11,7 +11,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) to preview the site locally.
 
-The Home, Kissner Field, Events, and Media pages are server-rendered and fetch live data when you run dev or deploy to Vercel.
+The Home, Kissner Field, Events, Meetings, and Media pages are server-rendered and fetch live data when you run dev or deploy to Vercel.
 
 ## Build
 
@@ -20,7 +20,7 @@ npm run build
 npm start
 ```
 
-Most pages are static. Home, Kissner Field, Events, and Media are rendered on demand via `getServerSideProps`.
+Most pages are static. Home, Kissner Field, Events, Meetings, and Media are rendered on demand via `getServerSideProps`.
 
 ## Deploy to Vercel
 
@@ -37,7 +37,8 @@ Most pages are static. Home, Kissner Field, Events, and Media are rendered on de
 |----------|----------|---------|
 | `FACEBOOK_GROUP_EVENTS_URL` | No | `https://www.facebook.com/groups/BRRCC/events` |
 | `FACEBOOK_GROUP_MEDIA_URL` | No | `https://www.facebook.com/groups/BRRCC/media` |
-| `HTTP_PROXY` | No | Optional proxy URL if Facebook blocks Vercel IPs |
+| `HTTP_PROXY` | No | Optional proxy URL if Facebook or YouTube blocks Vercel IPs |
+| `YOUTUBE_CHANNEL_HANDLE` | No | `BatonRougeRC` (YouTube handle for meeting live streams) |
 | `FIELD_LAT` | No | `30.503459` (Kissner Field latitude) |
 | `FIELD_LON` | No | `-91.349838` (Kissner Field longitude) |
 
@@ -72,10 +73,20 @@ The Media page (`/media`) and homepage preview pull recent photos and videos fro
 
 The homepage preview is server-rendered from Facebook directly. Thumbnails are served through `/api/media/image` because Facebook CDN URLs expire quickly when linked directly.
 
+### YouTube meeting live streams
+
+The Meetings page (`/meetings`) lists upcoming and past live streams from the public [Baton Rouge RC Club YouTube channel](https://www.youtube.com/@BatonRougeRC). No YouTube API key is required — the site scrapes the channel's public `/streams` and `/live` pages server-side (same approach as Facebook events).
+
+- [`lib/fetchYouTubeStreams.ts`](lib/fetchYouTubeStreams.ts) — scrapes YouTube channel pages and parses embedded page data
+- [`pages/api/youtube.ts`](pages/api/youtube.ts) — JSON endpoint with 6-hour cache; cron target
+- [`vercel.json`](vercel.json) — daily cron job hits `/api/youtube` to warm the cache (Hobby plan limit)
+
+If scraping fails, the Meetings page shows a fallback message with a link to the YouTube channel.
+
 ## Project structure
 
-- `pages/` — site pages (Home, Kissner Field, Events, Media, About, Contact) and API routes
-- `lib/` — server-side helpers (weather, Facebook events, Facebook media)
+- `pages/` — site pages (Home, Kissner Field, Events, Meetings, Media, About, Contact) and API routes
+- `lib/` — server-side helpers (weather, Facebook events, Facebook media, YouTube streams)
 - `components/` — shared layout pieces (header, footer, hero, weather, media)
 - `styles/globals.css` — Tailwind base styles and theme
 - `public/images/` — logo and hero graphics
@@ -83,7 +94,7 @@ The homepage preview is server-rendered from Facebook directly. Thumbnails are s
 
 ## Updating content
 
-Page copy lives in the `.tsx` files under `pages/`. Edit those files and redeploy. Event listings on `/events`, media on `/media`, and weather on Home/Kissner Field update automatically from their data sources.
+Page copy lives in the `.tsx` files under `pages/`. Edit those files and redeploy. Event listings on `/events`, meeting live streams on `/meetings`, media on `/media`, and weather on Home/Kissner Field update automatically from their data sources.
 
 ## Security notes
 

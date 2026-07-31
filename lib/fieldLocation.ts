@@ -5,7 +5,7 @@ export const FIELD_TIMEZONE = 'America/Chicago';
 export const FIELD_GOOGLE_MAPS_URL =
   'https://www.google.com/maps/place/BRRC+Club+Runway+at+Kissner+Field/@30.503459,-91.3524129,620m/data=!3m1!1e3!4m12!1m5!3m4!2zMzDCsDMwJzEyLjUiTiA5McKwMjAnNTkuNCJX!8m2!3d30.503459!4d-91.349838!3m5!1s0x8624181383fe48c3:0xaf280e4c173f1a43!8m2!3d30.5040508!4d-91.3496256!16s%2Fg%2F11cjy2ny82?entry=ttu&g_ep=EgoyMDI2MDYwMS4wIKXMDSoASAFQAw%3D%3D';
 
-export const MEETING_LIBRARY_NAME = 'East Baton Rouge Parish Main Branch Library';
+export const MEETING_LIBRARY_NAME = 'Goodwood Library';
 export const MEETING_LIBRARY_GOOGLE_MAPS_URL =
   'https://www.google.com/maps/search/?api=1&query=East+Baton+Rouge+Parish+Library+7711+Goodwood+Blvd+Baton+Rouge+LA+70806';
 

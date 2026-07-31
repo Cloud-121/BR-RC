@@ -25,7 +25,7 @@ export const getServerSideProps: GetServerSideProps<EventsProps> = async () => {
     loadError =
       error instanceof Error
         ? error.message
-        : 'Unable to load events from Facebook right now.';
+        : "Couldn't load events from Facebook right now.";
   }
 
   return { props: serializeProps({ events, loadError }) };

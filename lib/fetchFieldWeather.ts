@@ -1,5 +1,17 @@
 import { FIELD_TIMEZONE, getFieldCoordinates } from './fieldLocation';
 
+export interface HourlyWeatherSlot {
+  time: string;
+  temperatureF: number;
+  windSpeedMph: number;
+  windGustMph: number | null;
+  windDirection: string;
+  windDirectionDeg: number;
+  precipitationIn: number;
+  weatherCode: number;
+  conditions: string;
+}
+
 export interface FieldWeather {
   temperatureF: number;
   feelsLikeF: number;
@@ -7,11 +19,13 @@ export interface FieldWeather {
   windSpeedMph: number;
   windGustMph: number | null;
   windDirection: string;
+  windDirectionDeg: number;
   precipitationIn: number;
   rainfall24hIn: number;
   conditions: string;
   weatherCode: number;
   observedAt: string;
+  hourly: HourlyWeatherSlot[];
 }
 
 export class FieldWeatherError extends Error {
@@ -83,16 +97,25 @@ interface OpenMeteoCurrent {
   weather_code: number;
 }
 
-interface OpenMeteoResponse {
-  current?: OpenMeteoCurrent;
-  hourly?: {
-    precipitation: number[];
-  };
+interface OpenMeteoHourly {
+  time: string[];
+  temperature_2m?: number[];
+  wind_speed_10m?: number[];
+  wind_gusts_10m?: number[];
+  wind_direction_10m?: number[];
+  precipitation?: number[];
+  weather_code?: number[];
 }
 
-function sumHourlyPrecipitation(values: number[] | undefined): number {
+interface OpenMeteoResponse {
+  current?: OpenMeteoCurrent;
+  hourly?: OpenMeteoHourly;
+}
+
+function sumHourlyPrecipitation(values: number[] | undefined, count = values?.length ?? 0): number {
   if (!values?.length) return 0;
-  return values.reduce((total, amount) => total + amount, 0);
+  const slice = values.slice(-count);
+  return slice.reduce((total, amount) => total + amount, 0);
 }
 
 export function degreesToCompass(degrees: number): string {
@@ -103,6 +126,54 @@ export function degreesToCompass(degrees: number): string {
 
 export function weatherCodeToLabel(code: number): string {
   return WMO_LABELS[code] ?? 'Unknown';
+}
+
+function mapHourlySlot(hourly: OpenMeteoHourly, index: number): HourlyWeatherSlot | null {
+  const time = hourly.time[index];
+  const temperature = hourly.temperature_2m?.[index];
+  const windSpeed = hourly.wind_speed_10m?.[index];
+  const windDirectionDeg = hourly.wind_direction_10m?.[index];
+  const weatherCode = hourly.weather_code?.[index];
+
+  if (
+    time == null ||
+    temperature == null ||
+    windSpeed == null ||
+    windDirectionDeg == null ||
+    weatherCode == null
+  ) {
+    return null;
+  }
+
+  const gust = hourly.wind_gusts_10m?.[index];
+
+  return {
+    time,
+    temperatureF: Math.round(temperature),
+    windSpeedMph: Math.round(windSpeed),
+    windGustMph: gust != null ? Math.round(gust) : null,
+    windDirection: degreesToCompass(windDirectionDeg),
+    windDirectionDeg,
+    precipitationIn: hourly.precipitation?.[index] ?? 0,
+    weatherCode,
+    conditions: weatherCodeToLabel(weatherCode),
+  };
+}
+
+function buildHourlyForecast(hourly: OpenMeteoHourly | undefined, fromTime: string): HourlyWeatherSlot[] {
+  if (!hourly?.time?.length) return [];
+
+  const startIndex = hourly.time.findIndex((time) => time >= fromTime);
+  if (startIndex === -1) return [];
+
+  const slots: HourlyWeatherSlot[] = [];
+
+  for (let index = startIndex; index < hourly.time.length && slots.length < 24; index += 1) {
+    const slot = mapHourlySlot(hourly, index);
+    if (slot) slots.push(slot);
+  }
+
+  return slots;
 }
 
 export async function fetchFieldWeather(): Promise<FieldWeather> {
@@ -125,9 +196,16 @@ export async function fetchFieldWeather(): Promise<FieldWeather> {
     wind_speed_unit: 'mph',
     precipitation_unit: 'inch',
     timezone: FIELD_TIMEZONE,
-    hourly: 'precipitation',
+    hourly: [
+      'temperature_2m',
+      'wind_speed_10m',
+      'wind_gusts_10m',
+      'wind_direction_10m',
+      'precipitation',
+      'weather_code',
+    ].join(','),
     past_hours: '24',
-    forecast_hours: '0',
+    forecast_hours: '24',
   });
 
   const url = `https://api.open-meteo.com/v1/forecast?${params.toString()}`;
@@ -146,6 +224,9 @@ export async function fetchFieldWeather(): Promise<FieldWeather> {
     }
 
     const current = data.current;
+    const hourly = data.hourly;
+    const pastPrecip = hourly?.precipitation;
+    const pastHourCount = pastPrecip?.length ? Math.min(24, pastPrecip.length) : 0;
 
     return {
       temperatureF: Math.round(current.temperature_2m),
@@ -155,11 +236,13 @@ export async function fetchFieldWeather(): Promise<FieldWeather> {
       windGustMph:
         current.wind_gusts_10m != null ? Math.round(current.wind_gusts_10m) : null,
       windDirection: degreesToCompass(current.wind_direction_10m),
+      windDirectionDeg: current.wind_direction_10m,
       precipitationIn: current.precipitation,
-      rainfall24hIn: sumHourlyPrecipitation(data.hourly?.precipitation),
+      rainfall24hIn: sumHourlyPrecipitation(pastPrecip, pastHourCount),
       conditions: weatherCodeToLabel(current.weather_code),
       weatherCode: current.weather_code,
       observedAt: current.time,
+      hourly: buildHourlyForecast(hourly, current.time),
     };
   } catch (error) {
     if (error instanceof FieldWeatherError) throw error;

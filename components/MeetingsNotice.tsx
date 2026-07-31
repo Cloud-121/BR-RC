@@ -1,12 +1,13 @@
 import Link from 'next/link';
 import { cn } from '@/lib/cn';
+import { MEETING_LIBRARY_NAME } from '@/lib/fieldLocation';
 
 interface MeetingsNoticeProps {
   compact?: boolean;
 }
 
 const when = '1st Tuesday of each month, 6:30 PM';
-const where = 'East Baton Rouge Parish Main Branch Library';
+const where = MEETING_LIBRARY_NAME;
 
 export default function MeetingsNotice({ compact = false }: MeetingsNoticeProps) {
   return (
@@ -41,6 +42,8 @@ export default function MeetingsNotice({ compact = false }: MeetingsNoticeProps)
         </>
       )}
       <p>
+        <Link href="/meetings">Watch live meetings on YouTube</Link>
+        {' · '}
         <Link href="/about">More about the club</Link>
       </p>
     </aside>

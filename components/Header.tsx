@@ -7,6 +7,7 @@ const navItems = [
   { href: '/', label: 'Home' },
   { href: '/kissner-field', label: 'Kissner Field' },
   { href: '/events', label: 'Events' },
+  { href: '/meetings', label: 'Meetings' },
   { href: '/media', label: 'Media' },
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
@@ -27,7 +28,7 @@ export default function Header() {
       <div className="mx-auto flex max-w-content flex-wrap items-center justify-between gap-6 px-5 py-4 max-md:px-4 max-md:py-3.5">
         <Link href="/" className="flex items-center gap-4 text-white no-underline hover:text-white">
           <img
-            src="/images/logo.jpg"
+            src="/images/logo-original.jpg"
             alt="Baton Rouge RC Club logo"
             width={120}
             height={56}

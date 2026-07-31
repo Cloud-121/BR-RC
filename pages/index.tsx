@@ -29,7 +29,7 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
     weatherError =
       error instanceof Error
         ? error.message
-        : 'Unable to load current field weather right now.';
+        : "Couldn't load field weather right now.";
   }
 
   try {
@@ -38,7 +38,7 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
     mediaError =
       error instanceof Error
         ? error.message
-        : 'Unable to load recent photos and videos right now.';
+        : "Couldn't load recent photos and videos right now.";
   }
 
   return {
@@ -57,7 +57,7 @@ export default function Home({ weather, weatherError, mediaPreview, mediaError }
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           <InfoCard title="Kissner Field" href="/kissner-field">
-            Situated in West Baton Rouge Parish, Grass runways, and covered battery charging.
+            Located in West Baton Rouge Parish, Grass runways, and covered battery charging.
           </InfoCard>
           <InfoCard title="Join the Club" href="/about">
             Meetings are the 1st Tuesday of each month at 6:30 PM, The public is welcome.

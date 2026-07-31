@@ -21,10 +21,13 @@ export default function About() {
               chartered club that has been flying at Kissner Field for nearly 40 years.
             </p>
             <p>
-              Our members include hobbyists who build their own planes, casual flyers who come out for
-              fun, and builders. Guests and the general public are welcome.
+              If you like building or just flying, it&apos;s fun for all. We also welcome visitors who
+              just want to learn about our hobby to our field. Guests and the general public are welcome.
             </p>
             <p>AMA membership is required to fly at the field.</p>
+            <p>
+              We are a FRIA approved site. No Remote ID needed.
+            </p>
           </section>
 
           <section className="mb-8 last:mb-0">

@@ -24,7 +24,7 @@ export const getServerSideProps: GetServerSideProps<MediaPageProps> = async () =
     loadError =
       error instanceof Error
         ? error.message
-        : 'Unable to load media from Facebook right now.';
+        : "Couldn't load media from Facebook right now.";
   }
 
   return { props: serializeProps({ media, loadError }) };
