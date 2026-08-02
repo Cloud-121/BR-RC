@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import Layout from '@/components/Layout';
 import HeroStrip from '@/components/HeroStrip';
 import AboutConsoleEasterEgg from '@/components/AboutConsoleEasterEgg';
@@ -17,16 +18,30 @@ export default function About() {
           <section className="mb-8 last:mb-0">
             <h2>Our Club</h2>
             <p>
-              The Baton Rouge Radio Control Club (BRRCC) is an Academy of Model Aeronautics (AMA)
-              chartered club that has been flying at Kissner Field for nearly 40 years.
+              The Baton Rouge RC Club flies in West Baton Rouge near Erwinville, Louisiana — outside
+              Baton Rouge on Highway 190 before Erwinville. Come out and join us for some great RC
+              fun!
             </p>
             <p>
               If you like building or just flying, it&apos;s fun for all. We also welcome visitors who
               just want to learn about our hobby to our field. Guests and the general public are welcome.
             </p>
-            <p>AMA membership is required to fly at the field.</p>
             <p>
-              We are a FRIA approved site. No Remote ID needed.
+              We are an AMA approved flying site and a FRIA approved site. No Remote ID needed. AMA
+              membership is required to fly at the field.
+            </p>
+            <p>
+              Welcome to our{' '}
+              <a href="https://www.facebook.com/groups/BRRCC" target="_blank" rel="noopener noreferrer">
+                Facebook group
+              </a>
+              . You need an aviation or RC flying interest to be admitted to the group — RC airplanes,
+              drones, photography of them, or any flying machines. That requirement applies only to the
+              Facebook group, not to visiting the club or field.
+            </p>
+            <p>
+              For directions and popular flying days, see{' '}
+              <Link href="/kissner-field">Kissner Field</Link>.
             </p>
           </section>
 
@@ -53,7 +68,8 @@ export default function About() {
               </li>
             </ul>
             <p>
-              Meeting details are also posted on our{' '}
+              Please watch for our posts when we are going out — weather permitting. Meeting details
+              are also posted on our{' '}
               <a href="https://www.facebook.com/groups/BRRCC" target="_blank" rel="noopener noreferrer">
                 Facebook group
               </a>

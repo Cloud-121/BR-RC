@@ -37,8 +37,8 @@ Most pages are static. Home, Kissner Field, Events, Meetings, and Media are rend
 |----------|----------|---------|
 | `FACEBOOK_GROUP_EVENTS_URL` | No | `https://www.facebook.com/groups/BRRCC/events` |
 | `FACEBOOK_GROUP_MEDIA_URL` | No | `https://www.facebook.com/groups/BRRCC/media` |
-| `HTTP_PROXY` | No | Optional proxy URL if Facebook or YouTube blocks Vercel IPs |
-| `YOUTUBE_CHANNEL_HANDLE` | No | `BatonRougeRC` (YouTube handle for meeting live streams) |
+| `HTTP_PROXY` | No | Optional proxy URL if Facebook blocks Vercel IPs |
+| `YOUTUBE_CHANNEL_HANDLE` | No | `BatonRougeRC` (YouTube handle for meeting stream links) |
 | `FIELD_LAT` | No | `30.503459` (Kissner Field latitude) |
 | `FIELD_LON` | No | `-91.349838` (Kissner Field longitude) |
 
@@ -73,18 +73,33 @@ The Media page (`/media`) and homepage preview pull recent photos and videos fro
 
 The homepage preview is server-rendered from Facebook directly. Thumbnails are served through `/api/media/image` because Facebook CDN URLs expire quickly when linked directly.
 
-### YouTube meeting live streams
+### YouTube meeting streams
 
-The Meetings page (`/meetings`) lists upcoming and past live streams from the public [Baton Rouge RC Club YouTube channel](https://www.youtube.com/@BatonRougeRC). No YouTube API key is required — the site scrapes the channel's public `/streams` and `/live` pages server-side (same approach as Facebook events).
+The Meetings page (`/meetings`, member-gated) lists streams from [`data/youtube-streams.json`](data/youtube-streams.json). Entries are classified by `date` (upcoming vs past), sorted by age, and linked by YouTube video `id` — works for unlisted videos.
 
-- [`lib/fetchYouTubeStreams.ts`](lib/fetchYouTubeStreams.ts) — scrapes YouTube channel pages and parses embedded page data
-- [`pages/api/youtube.ts`](pages/api/youtube.ts) — JSON endpoint with 6-hour cache; cron target
-- [`vercel.json`](vercel.json) — daily cron job hits `/api/youtube` to warm the cache (Hobby plan limit)
+```json
+{
+  "channelUrl": "https://www.youtube.com/@BatonRougeRC",
+  "streams": [
+    {
+      "id": "VIDEO_ID",
+      "title": "Club Meeting — August 4, 2026",
+      "date": "2026-08-04T18:30:00-05:00"
+    }
+  ]
+}
+```
 
-If scraping fails, the Meetings page shows a fallback message with a link to the YouTube channel.
+Optional `status`: `"live"`, `"upcoming"`, or `"completed"` to override date-based classification. Optional `thumbnailUrl` overrides the default YouTube thumbnail.
+
+- [`lib/fetchYouTubeStreams.ts`](lib/fetchYouTubeStreams.ts) — reads and sorts the JSON file
+- [`pages/api/youtube.ts`](pages/api/youtube.ts) — JSON endpoint for the same data
+
+Add a new meeting by appending an entry and redeploying.
 
 ## Project structure
 
+- `data/` — editable content such as YouTube meeting streams JSON
 - `pages/` — site pages (Home, Kissner Field, Events, Meetings, Media, About, Contact) and API routes
 - `lib/` — server-side helpers (weather, Facebook events, Facebook media, YouTube streams)
 - `components/` — shared layout pieces (header, footer, hero, weather, media)
@@ -94,7 +109,7 @@ If scraping fails, the Meetings page shows a fallback message with a link to the
 
 ## Updating content
 
-Page copy lives in the `.tsx` files under `pages/`. Edit those files and redeploy. Event listings on `/events`, meeting live streams on `/meetings`, media on `/media`, and weather on Home/Kissner Field update automatically from their data sources.
+Page copy lives in the `.tsx` files under `pages/`. Meeting stream links live in [`data/youtube-streams.json`](data/youtube-streams.json). Event listings on `/events`, media on `/media`, and weather on Home/Kissner Field update automatically from their data sources.
 
 ## Security notes
 

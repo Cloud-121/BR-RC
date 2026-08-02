@@ -1,3 +1,5 @@
+import MembersFooterButton from './MembersFooterButton';
+
 export default function Footer() {
   return (
     <footer className="mt-auto bg-footer px-5 py-8 text-white/75">
@@ -21,6 +23,7 @@ export default function Footer() {
           Facebook Group
         </a>
       </div>
+      <MembersFooterButton />
     </footer>
   );
 }

@@ -48,14 +48,9 @@ export default function KissnerField({ weather, weatherError }: KissnerFieldProp
           <section className="mb-8 last:mb-0">
             <h2>About the Field</h2>
             <p>
-              Kissner Field sits in West Baton Rouge Parish near Erwinville, Louisiana, and is one
-              of the largest dedicated RC fields in the South. The club has operated here for nearly
-              40 years on a private airstrip leased from the Kissner family, west of Baton Rouge on
-              Highway 190.
-            </p>
-            <p>
-              Members take pride in maintaining the property so it&apos;s ready for flying year-round.
-              Spectators and guest pilots are welcome — AMA membership is required to fly.
+              Kissner Field sits in West Baton Rouge near Erwinville, Louisiana — outside Baton Rouge
+              on Highway 190 before Erwinville. The club has operated here for nearly 40 years on a
+              private airstrip leased from the Kissner family.
             </p>
             <p>
               We are an AMA approved flying site and a FRIA approved site. No Remote ID needed.
@@ -70,10 +65,6 @@ export default function KissnerField({ weather, weatherError }: KissnerFieldProp
                 <span>8940 Ronald Reagan Highway, Port Allen, LA 70767</span>
               </li>
               <li className="grid gap-1 border-b border-cream-dark py-3 md:grid-cols-[9rem_1fr] md:gap-3">
-                <strong className="font-semibold text-green">GPS</strong>
-                <span>30.503459, -91.349838</span>
-              </li>
-              <li className="grid gap-1 border-b border-cream-dark py-3 md:grid-cols-[9rem_1fr] md:gap-3">
                 <strong className="font-semibold text-green">Landmark</strong>
                 <span>
                   Directly across the street from Tiger Trailer work park — look for the Tiger
@@ -82,14 +73,9 @@ export default function KissnerField({ weather, weatherError }: KissnerFieldProp
               </li>
               <li className="grid gap-1 border-b border-cream-dark py-3 md:grid-cols-[9rem_1fr] md:gap-3">
                 <strong className="font-semibold text-green">Directions</strong>
-                <span>
-                  Look for the white sign with black letters right off the highway stating
-                  &quot;Kissner Field.&quot; Turn there, cross the tracks onto a gravel road, and
-                  follow it until it dead ends at our field.{" "}
-                  <a href={FIELD_GOOGLE_MAPS_URL} target="_blank" rel="noopener noreferrer">
-                    View on Google Maps
-                  </a>
-                </span>
+                <a href={FIELD_GOOGLE_MAPS_URL} target="_blank" rel="noopener noreferrer">
+                  View on Google Maps
+                </a>
               </li>
               <li className="grid gap-1 py-3 md:grid-cols-[9rem_1fr] md:gap-3">
                 <strong className="font-semibold text-green">Popular flying days</strong>

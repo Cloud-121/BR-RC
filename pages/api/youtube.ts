@@ -1,12 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { YouTubeStreamsError, fetchYouTubeStreams } from '@/lib/fetchYouTubeStreams';
+import { YOUTUBE_CHANNEL_URL } from '@/lib/youtubeChannel';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(_req: NextApiRequest, res: NextApiResponse) {
   try {
     const streams = await fetchYouTubeStreams();
 
     res.setHeader('Content-Type', 'application/json');
-    res.setHeader('Cache-Control', 's-maxage=21600, stale-while-revalidate=86400');
+    res.setHeader('Cache-Control', 's-maxage=300, stale-while-revalidate=3600');
     return res.status(200).json({
       ...streams,
       fetchedAt: new Date().toISOString(),
@@ -15,12 +16,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const message =
       error instanceof YouTubeStreamsError
         ? error.message
-        : 'Unable to load live streams from YouTube.';
+        : 'Unable to load meeting streams.';
 
     res.setHeader('Content-Type', 'application/json');
-    res.setHeader('Cache-Control', 's-maxage=300, stale-while-revalidate=600');
-    return res.status(502).json({
-      channelUrl: 'https://www.youtube.com/@BatonRougeRC',
+    res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
+    return res.status(500).json({
+      channelUrl: YOUTUBE_CHANNEL_URL,
       live: null,
       upcoming: [],
       past: [],

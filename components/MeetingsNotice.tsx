@@ -23,27 +23,18 @@ export default function MeetingsNotice({ compact = false }: MeetingsNoticeProps)
           We meet every <strong>{when}</strong> at the {where}. The public is welcome.
         </p>
       ) : (
-        <>
-          <p>
-            We hold club meetings every <strong>first Tuesday of the month</strong> at{' '}
-            <strong>6:30 PM</strong>. The public is welcome — come to a meeting to learn about
-            membership.
-          </p>
-          <ul className="mt-3 list-none p-0">
-            <li className="grid gap-1 border-b border-cream-dark py-3 md:grid-cols-[9rem_1fr] md:gap-3">
-              <strong className="font-semibold text-green">When</strong>
-              <span>{when}</span>
-            </li>
-            <li className="grid gap-1 py-3 md:grid-cols-[9rem_1fr] md:gap-3">
-              <strong className="font-semibold text-green">Where</strong>
-              <span>{where}</span>
-            </li>
-          </ul>
-        </>
+        <ul className="mt-3 list-none p-0">
+          <li className="grid gap-1 border-b border-cream-dark py-3 md:grid-cols-[9rem_1fr] md:gap-3">
+            <strong className="font-semibold text-green">When</strong>
+            <span>{when}</span>
+          </li>
+          <li className="grid gap-1 py-3 md:grid-cols-[9rem_1fr] md:gap-3">
+            <strong className="font-semibold text-green">Where</strong>
+            <span>{where}</span>
+          </li>
+        </ul>
       )}
       <p>
-        <Link href="/meetings">Watch live meetings on YouTube</Link>
-        {' · '}
         <Link href="/about">More about the club</Link>
       </p>
     </aside>

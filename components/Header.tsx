@@ -2,12 +2,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { cn } from '@/lib/cn';
+import MembersHeaderButton from './MembersHeaderButton';
 
 const navItems = [
   { href: '/', label: 'Home' },
   { href: '/kissner-field', label: 'Kissner Field' },
   { href: '/events', label: 'Events' },
-  { href: '/meetings', label: 'Meetings' },
   { href: '/media', label: 'Media' },
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
@@ -39,19 +39,24 @@ export default function Header() {
           </span>
         </Link>
         <nav className="flex w-full flex-col items-start md:w-auto md:flex-row md:items-center" aria-label="Main">
-          <button
-            type="button"
-            className="min-h-11 cursor-pointer rounded-md border border-white/40 px-3 py-2 text-sm font-semibold text-white md:hidden"
-            onClick={() => setMenuOpen((open) => !open)}
-            aria-expanded={menuOpen}
-            aria-controls="main-nav"
-          >
-            Menu
-          </button>
+          <div className="flex w-full items-center justify-between gap-3 md:contents">
+            <button
+              type="button"
+              className="min-h-11 cursor-pointer rounded-md border border-white/40 px-3 py-2 text-sm font-semibold text-white md:hidden"
+              onClick={() => setMenuOpen((open) => !open)}
+              aria-expanded={menuOpen}
+              aria-controls="main-nav"
+            >
+              Menu
+            </button>
+            <div className="md:hidden">
+              <MembersHeaderButton />
+            </div>
+          </div>
           <ul
             id="main-nav"
             className={cn(
-              'm-0 w-full list-none flex-col gap-1 p-0 md:flex md:w-auto md:flex-row md:flex-wrap md:justify-end md:gap-1.5',
+              'm-0 w-full list-none flex-col gap-1 p-0 md:flex md:w-auto md:flex-row md:flex-wrap md:items-center md:justify-end md:gap-1.5',
               menuOpen ? 'flex pt-3' : 'hidden md:flex',
             )}
           >
@@ -72,6 +77,9 @@ export default function Header() {
                 </Link>
               </li>
             ))}
+            <li className="hidden md:list-item md:ml-1 md:flex md:items-center">
+              <MembersHeaderButton />
+            </li>
           </ul>
         </nav>
       </div>
