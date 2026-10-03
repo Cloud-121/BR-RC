@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { cn } from '@/lib/cn';
-import MembersHeaderButton from './MembersHeaderButton';
 
 const navItems = [
   { href: '/', label: 'Home' },
@@ -49,9 +48,6 @@ export default function Header() {
             >
               Menu
             </button>
-            <div className="md:hidden">
-              <MembersHeaderButton />
-            </div>
           </div>
           <ul
             id="main-nav"
@@ -77,9 +73,6 @@ export default function Header() {
                 </Link>
               </li>
             ))}
-            <li className="hidden md:list-item md:ml-1 md:flex md:items-center">
-              <MembersHeaderButton />
-            </li>
           </ul>
         </nav>
       </div>

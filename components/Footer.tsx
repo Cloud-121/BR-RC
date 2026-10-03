@@ -21,6 +21,16 @@ export default function Footer() {
           Facebook Group
         </a>
       </div>
+      <p className="mx-auto mb-0 mt-6 max-w-content text-center text-xs">
+        <a
+          href="https://lenleyngo.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-white/60 no-underline hover:text-white"
+        >
+          Website Designed &amp; Hosted by Lenley Ngo
+        </a>
+      </p>
     </footer>
   );
 }

@@ -2,6 +2,7 @@ import type { GetServerSideProps } from 'next';
 import Layout from '@/components/Layout';
 import HeroStrip from '@/components/HeroStrip';
 import EventCard from '@/components/EventCard';
+import RedStickClassicEvent from '@/components/RedStickClassicEvent';
 import MeetingsNotice from '@/components/MeetingsNotice';
 import CtaBanner from '@/components/CtaBanner';
 import { fetchGroupEvents, type ClubEvent } from '@/lib/fetchGroupEvents';
@@ -35,18 +36,21 @@ export default function Events({ events, loadError }: EventsProps) {
   return (
     <Layout
       title="Events"
-      description="Upcoming events at Baton Rouge RC Club — fly-ins and competitions at Kissner Field."
+      description="Red Stick Classic RC Scale Contest, October 23–24, 2026 at Kissner Field, plus upcoming Baton Rouge RC Club events."
     >
       <HeroStrip headline="Events" showButton={false} compact imageSrc="/images/event.jpg" />
 
       <main className="mx-auto max-w-content px-5 py-10 pb-14 max-md:px-4 max-md:py-8">
+        <RedStickClassicEvent />
+
+        <MeetingsNotice compact />
+
         <div className="rounded-[var(--radius-default)] border border-border bg-white p-8 shadow-[var(--shadow-card)] max-md:p-6">
+          <h2>Facebook Events</h2>
           <p>
             Upcoming events from our Facebook group are listed below.
           </p>
         </div>
-
-        <MeetingsNotice compact />
 
         {loadError ? (
           <div className="mt-8 rounded-[var(--radius-default)] border border-border bg-white p-8 shadow-[var(--shadow-card)] border-l-4 border-l-rust max-md:p-6">
